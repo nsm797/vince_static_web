@@ -1,0 +1,44 @@
+Account: vince   					document   zabbix  
+Email : vincent@zamplus.com  email		
+Jira & Confluence: vincent-nan              
+PD you should be one ? all in one ?  in your first company ,than you always did. 
+
+Vc3N67Ws
+
+考核表
+
+机房布局： 
+泰山   172.22.0.0   外：221.228.208.0 
+白云山 10.77.77.0   外： 202.181.213.0
+微软azure 10.66     
+
+DNS 172.22.40.250            
+OP03 172.22.40.251                                 #开发只有ro，checking log权限；
+
+hadoop 172.22.0 ~ 15 ; 
+hadoop 中转 172.22.16.0/21 
+hadoop 接入 172.22.24.0/21
+DB: 172.22.32.0/21 DB  
+Control: 172.22.40.0/21 
+
+Meeting:
+12.8  14:00 ~ 16:00  company introduction ; zamplus overview
+12.9	DSP production intro  ;  DMP pro intro .
+
+TS-BHTEST-01 IN A 172.22.49.1
+314 TS-BH137    IN  A   172.22.49.1
+
+db.zamplus:TS-BH141	IN	A	172.22.49.5
+db.zamplus.172.22.6.x:141	IN	PTR	TS-BH141.zamplus.local.
+
+--------------
+重IO 不推荐 用docker ； 
+重CPU，内存
+--------------
+张光增负责我们这个产品，会当point of contact。周强是我们运维负责人。
+--------------
+MinTTY ; 
+             'schemaCachingDuration' => 86400, //缓存表结构^M
+sudo  /usr/bin/php /usr/local/zampda-api/protected/config/console.php gdtpcapi getdailybiddingreport
+
+

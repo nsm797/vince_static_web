@@ -1,0 +1,68 @@
+
+question：
+如何做到精确监控？ 流量不容易看出问题 怎么办， 如何能精确锁定到失控的服务器？
+
+zlogin 
+salt  
+zabbix；
+termrec       /usr/local/bin/termrec -a /var/log/oplog/vince-201512090935.ttyrec  在记录我控制台的操作； 
+
+fabric    类似os模块呢！
+	{from fabric.api import run
+		def host_type():
+    run('uname -s')
+	}
+	
+$ fab -H localhost,linuxbox host_type
+
+
+
+
+init_azure.py 解析； 
+.put : copy文件呗
+.sudo : run command 呗
+	.change dns file
+	.change yum
+	.system config
+	.crontab
+	.update rpm
+	.ncsd ? atop , zamplus-passreq ,/etc/serial 硬件信息； zabbix ，gid，cron ； profile ；
+	
+hostname = HOST_DICT.get(env.host_string)
+ 83     if  hostname:
+ 84         sudo('echo "%s" > /etc/hostname'%hostname)
+ 85         sudo('hostname %s'%hostname)
+
+
+---------------------------------------
+include "/etc/bind/named.conf.options";
+include "/etc/bind/named.conf.local";
+include "/etc/bind/named.conf.default-zones";
+
+------------------------------------------------------------------------------
+vince@SHYF-H10-013-FE01:/var/run/named$ grep -r zamplus /etc/bind/* |more
+/etc/bind/named.conf
+/etc/bind/db.zamplus
+
+/etc/bind/named.conf.default-zones:zone "zamplus.local" {
+
+-----------------------------------
+$ sudo grep -r zamplus.local /etc/bind/* |more
+/etc/bind/db.zamplus:$ORIGIN zamplus.local.
+/etc/bind/db.zamplus:@       IN      SOA     zamplus.local. zamplus. (
+/etc/bind/db.zamplus.172.22.6.x:@       IN      SOA     zamplus.local. local. (
+/etc/bind/db.zamplus.172.22.6.x:36	IN	PTR	SHXJ-H08-BH036.zamplus.local.
+
+
+$  grep -r TS-BH110 /etc/bind/*
+/etc/bind/db.zamplus:TS-BH110	IN	A	172.22.6.110
+/etc/bind/db.zamplus.172.22.6.x:110	IN	PTR	TS-BH110.zamplus.local.
+-------------------------------
+-------------------------------------
+master 为 10.232.23.35,slave 为 10.232.23.35
+
+
+
+
+
+

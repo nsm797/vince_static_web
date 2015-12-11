@@ -1,0 +1,99 @@
+FROM daocloud.io/ubuntu:trusty
+MAINTAINER Vincent Nam <vince797@aliyun.com>
+RUN apt-get update && \
+    apt-get install -y python \
+                       python-dev \
+                       python-pip && \
+    rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /app
+WORKDIR /app
+CMD ["bash"]
+
+
+install Docker quicker ;
+make sure the container can runs ; 
+install the splunk on linux ? 
+
+Clean and maintain you Work PC 
+--------
+--------
+周总提 的 内容： 
+	采集数据：【如我们本地；是采集到磁盘，再load到系统】
+	依赖关系：
+
+
+分享一些我们官网常用的资源：
+splunk: http://www.splunk.com/
+下载免费试用版splunk: http://www.splunk.com/download
+下载splunk app: http://apps.splunk.com/ 
+
+基础手册：http://docs.splunk.com/Documentation/Splunk/latest/SearchTutorial/WelcometotheSearchTutorial
+手册：http://docs.splunk.com/Documentation
+全中文手册链接：http://docs.splunk.com/Documentation/Splunk/6.2.7/Translated/SimplifiedChinesemanuals
+
+以下是我们的community, 有什么问题，可以在以下网站查询。
+Splunk community:http://community.splunk.com/ 
+Splunk answers:http://answers.splunk.com/ 
+---------
+
+Best,
+Ray
+
+发件人: mike <mike@zamplus.com>
+
+我们这边会使用splunk的测试版。
+
+张光增负责我们这个产品，会当point of contact。
+--------------------------------------------------
+数据导入：
+配置文件和目录的 输入 	： 获取file和dir的data； sudo
+配置network的输入	；
+
+镜像可以在 daocloud ； 
+
+docker run -i -t ubuntu /bin/bash ## 有问题
+3f7eedc2488d
+
+docker run -i -t ubuntu  直接就ok了； 
+
+Install 
+-----
+团队目标：
+ 使zambada运维研发可用率达到99.9%
+
+团队项目中个人目标： 
+	熟练zambda体系的运行维护工作，尽力提高可用性和高效性；   
+	
+个人发展目标：
+	1.熟练hadoop，splunk等项目的测试，部署，运维工作；
+	2.实践配置集中管理方案，自动化脚本方案，优化运维工作的运行，管理效率；
+
+换163源头；-- ok 
+
+装wget  -- ok
+
+wget 下载splunk 的包；估计够呛，想办法copy吧 -- 已整理； 
+
+dpkg -i splunk-6.3.1-f3e41e4b37b2-linux-2.6-amd64.deb   -- 成功安装，
+
+# splunk start   ### 服务启动失败 ，
+
+        Checking critical directories...        Done
+        Checking indexes...
+homePath='/opt/splunk/var/lib/splunk/audit/db' of index=_audit on unusable files
+ystem.
+Validating databases (splunkd validatedb) failed with code '1'.  If you cannot r
+esolve the issue(s) above after consulting documentation, please file a case onl
+ine at http://www.splunk.com/page/submit_issue
+root@23d3780d44a9:~#
+
+“on unusable filesystem.”
+
+daoclould 整理我的容器 --ok
+配置容器， --ok 
+
+可能一，在容器上不行； --  源码包方式同样失败； -- ok 
+可能二：包不通用，给的本来不是ubuntu系统； -- 排除可能 -ok 
+可能二，搭建vitualHost  ?  
+
+

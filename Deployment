@@ -1,0 +1,109 @@
+#### Setup my account， seems like Under my acount it also can runs； 
+vince@TS-OP03:~$ sudo salt -G "ipv4:10.66.66.90" state.sls users.vince
+
+sudo salt -G "ipv4:172.22.56.13" state.sls users.vince
+
+##### For setting up other account . Must use 空格 instead of Tab ，Salt can't know tab ；
+cd /srv/salt/users/;
+cp any_users.sls new_users.sls
+vi new_users.sls;修改名字
+
+cd ./files/sshkey
+ssh-keygen;输入名字不加密码
+mv new_users new_user.pem
+mv new_users.pub new_users.pub.pem
+
+salt -G "ipv4:221.228.208.30" state.sls users.new_user
+
+send the key to the user via QQ 
+-------------------------------------------------------
+#### Update DNS 
+DNS 172.22.40.250 
+
+Add your record manually ### Geee ....
+bind9 reload 
+-------------------------------------------------------
+#### Update rpm ； 
+http://192.168.1.201:8877/deploy/admin/   tomtom
+
+click admin 
+search keyword （the rpm）
+locate the version in jira （rpm），click it ；
+
+click “release to unstbale repro”； 
+
+"go to admin ****"; 
+
+click “Sync Package” ;  
+
+-login the server need to update rpm : 
+-Updating the apt index . 
+# apt-get update  
+
+- check the list 
+# dpkg -l | grep zamplus
+ii  zamplus-billing-server            1.5.1125..1000                        zampabs billing server(selfmedia)
+- "ii" means it's ok , install the version we need.  
+# apt-get install zamplus-billing-server
+- Checking again . 
+
+# dpkg -l | grep zamplus
+ii  zamplus-billing-server            1.5.1207.1000                         zampabs billing server(media factor,accuen)
+
+- Restart service ；
+# /etc/init.d/zamplus-billing-server restart
+/usr/local/billing-server/bin/billing-server is stopping (pid=48136). done.
+Stopping nginx: nginx.
+/usr/local/billing-server/bin/billing-server is starting... ok (pid=28341
+28446).
+
+Starting nginx: nginx.
+-- 有时候会产生 僵尸进程！  
+# ps -ef |grep billing
+root     28341     1 99 16:32 ?        00:11:48 /usr/local/billing-server/bin/billing-server --config /usr/local/billing-server/conf/billing.conf --daemon
+root     28446     1  2 16:32 ?        00:00:11 /usr/local/billing-server/bin/billing-server --config /usr/local/billing-server/conf/billing.conf --daemon
+
+此时可能需要再重启一次；
+# /etc/init.d/zamplus-billing-server restart
+
+直到进程正常；
+# ps -ef |grep billing
+root     31040     1 99 16:41 ?        00:00:08 /usr/local/billing-server/bin/billing-server --config /usr/local/billing-server/conf/billing.conf --daemon
+
+--------------------------------------------------
+微软 云 服务器 初始化；【创建云服务器】 Virtual Servers . 
+
+{
+### Edit azure.info , replace with following ones.
+10.66.66.29  AZ-DNS01
+10.66.66.33  AZ-DNS02
+
+### The script init_azure.py include following message. some time need to replace .
+User:azureuser
+Pwd:AdaG(sVa4A3
+
+### Run it as sudo ? yeah ,I think . 
+fab -f init_azure.py  init_salt
+}
+
+PostThinging . 
+	像在K机器呢！ 把我们的服务器 配置，环境变量 自动 弄入新服务器：
+	引用了azure.info (IP VS hostname)
+	python脚本； 定义了account & pd ，maybe need to change it ； 
+	
+执行：
+修改azure.info 为你需要的信息； 
+按需求编辑 脚本 中的 account & pd ；
+执行：
+fab -f init_azure.py  init_salt
+
+扩展：
+还有可能来做其他云服务器的脚本；
+
+深入；
+	可以查看init_azure.py如何编写， 如何引用，查看常用模块； 如何引用salt ； 
+
+困难：
+	查询模块吧，有可能 知道如何工作 却自己写不出来；    
+	
+
