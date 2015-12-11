@@ -35,10 +35,3 @@ db.zamplus.172.22.6.x:141	IN	PTR	TS-BH141.zamplus.local.
 重IO 不推荐 用docker ； 
 重CPU，内存
 --------------
-张光增负责我们这个产品，会当point of contact。周强是我们运维负责人。
---------------
-MinTTY ; 
-             'schemaCachingDuration' => 86400, //缓存表结构^M
-sudo  /usr/bin/php /usr/local/zampda-api/protected/config/console.php gdtpcapi getdailybiddingreport
-
-
