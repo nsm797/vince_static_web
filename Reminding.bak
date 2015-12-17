@@ -19,7 +19,7 @@ DB: 172.22.32.0/21 DB
 Control: 172.22.40.0/21 
 
 
--------------My Working area (Azure); I will take charge this .
+-------------My Working area (Azure); 
 	CenOS :
 NameNode
 10.66.66.24 - NN-p;JN;ZK; Hbase-backup   

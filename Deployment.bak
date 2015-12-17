@@ -29,9 +29,6 @@ question1 £º
 
 Steps:
 	1. Added git (can't find git domain; can't ping git; can't access sso[test] ,SSO ? )
-		[root@CPIC-DMP11 local]# route add -net 10.8.8.0/24 gw 0.0.0.0
-			SIOCADDRT: Invalid argument
-		[root@CPIC-DMP11 local]# route add -net 10.8.8.0/24 gw 10.66.66.1
 	2. Added an nginx website ,setup php & nginx . (fixed php config problem)
   3. Added web root , set zampread own via zlogin (web: WOW, the way is impressing).
 	4. Added host record in file. fixed step 2 . 

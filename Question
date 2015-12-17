@@ -35,32 +35,51 @@ hostname = HOST_DICT.get(env.host_string)
 
 
 ---------------------------------------
-include "/etc/bind/named.conf.options";
-include "/etc/bind/named.conf.local";
-include "/etc/bind/named.conf.default-zones";
 
-------------------------------------------------------------------------------
-vince@SHYF-H10-013-FE01:/var/run/named$ grep -r zamplus /etc/bind/* |more
-/etc/bind/named.conf
-/etc/bind/db.zamplus
-
-/etc/bind/named.conf.default-zones:zone "zamplus.local" {
-
------------------------------------
-$ sudo grep -r zamplus.local /etc/bind/* |more
-/etc/bind/db.zamplus:$ORIGIN zamplus.local.
-/etc/bind/db.zamplus:@       IN      SOA     zamplus.local. zamplus. (
-/etc/bind/db.zamplus.172.22.6.x:@       IN      SOA     zamplus.local. local. (
-/etc/bind/db.zamplus.172.22.6.x:36	IN	PTR	SHXJ-H08-BH036.zamplus.local.
+--------
 
 
-$  grep -r TS-BH110 /etc/bind/*
-/etc/bind/db.zamplus:TS-BH110	IN	A	172.22.6.110
-/etc/bind/db.zamplus.172.22.6.x:110	IN	PTR	TS-BH110.zamplus.local.
--------------------------------
--------------------------------------
-master 为 10.232.23.35,slave 为 10.232.23.35
+Zambda 体系： 【zabbix中查询到的】
+Zampda3
+zampda3_AUX
+Zampda3_Banker
+Zampda3_Billing
+Zampda3_Bridge
+zampda3_cookiemappng
+Zampda3_DB
+zampda3_DEP
+Zampda3_DisplayRule
+zampda3_DMP
+Zampda3_Docker
+zampda3_DS
+Zampda3_FE  
+	-----  广告通，流量接入，优酷移动流量接入， 
+	sql建表 平台竞价每日日报表，平台消耗每日报表，平台广告主每日报表（平台，反作弊后展示数，流量展示）； 
+	添加解析：dreport.zamplus.local 172.22.49.1 端口9191.
+	升级deb 包； 查包的相关文件 ？ 
+	三台服务器cron执行php ，连接数据库； 
+		定义了连接哪台mysql数据库，php语言查询数据，获取数据 get daily bidding report，advertise report，
+	zamplus-report  -- JAVA 
+	线上FE只能看到广点通的移动联盟banner,插屏，开屏，wifi定向等基本功能设置保存正常。优酷的心中前、中、后贴，视频暂停，勾选保存正常。
+	api的那个包类似一个php程序，许多更新db的sql脚本
+	billing 这个暂时无法判断 用途，很多xml文件，启动的时候 显示是个nginx 呢！ （accuen平台计费）
+	fe30  ； php —— js ？？？？
+	
+Zampda3_Frequency
+zampda3_goodman
+Zampda3_HC
+zampda3_ID
+zampda3_KF
+Zampda3_Logcollector
+Zampda3_MC
+Zampda3_MT
+Zampda3_Render
+Zampda3_Robots    ---  类似广告生成？ 
+zampda3_TEST
+zampda3_TRK
+Zampda3_UC
 
+------------------
 
 
 
