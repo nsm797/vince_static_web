@@ -107,3 +107,225 @@ admin	Administrator	changeme@example.com	None	launcher	1
 
 
 /opt/php/etc/php-fpm.conf
+
+
+10.8.8.230  
+
+----
+Intermediate 媒介
+Conversely(相反的), 
+coordinate
+consolidate
+illustrate
+you explicitly(明确地) set it t
+----
+
+
+### Topology ;
+Indexer clusters   ； index replicatoin； 
+forwarder cluster  
+
+Receivers  -  indexer ；
+-------------------------------------
+http://docs.splunk.com/Documentation/Splunk/6.2.7/Forwarding/Deployanixdfmanually#Install_the_universal_forwarder
+
+### INSTALL forwarder is just like SE ;  
+### 2 packeges's diff is just name and install directory ; 
+rpm -i splunkforwarder_<package_name>.rpm ## /opt/splunkforwarder 
+rpm -i splunk_<package_name>.rpm  ## /opt/splunk  
+
+### why we need to migrate forwarder ? ["Migrate a nix forwarder" ]  A lighter to a latest version ? 
+
+### start : 
+splunk start
+
+### accespt license automatically ;
+splunk start --accept-license   
+
+### Auto start  ### This way will make splunk running as root . how can I resolve this ? 
+splunk enable boot-start ; 
+
+
+### Set the forwarder as a deployment client !  Specify the deloyment server  ! WOW ? host and port set as  ? port 8089 ?  
+### Or edit deploymentclient.conf ? I hate this way . <after using CLI ,check this config>
+splunk set deploy-poll <host>:<port>
+splunk restart    ### need restart to take effect .. 
+
+###  Here wirte the index server's hostname and port .  port is 9997 by default ?
+splunk add forward-server <host>:<port> -auth <username>:<password>
+
+#####
+<username>:<password> is the username and password for logging into the forwarder. By default, these are "admin:changeme" 
+###Change pd .
+"splunk edit user admin -password <new password> 
+
+####Set a client name .  need a restart . default is uuid ? 
+[deployment-client] 
+...
+clientName = Fflanda-LINUX1
+
+{
+/opt/splunkforwarder/etc/system/local/deploymentclient.conf:targetUri = 10.8.16.65:8089   ## Set itself as a deployment client, Also point it to deployment Server .  
+# Configure forwarders 
+/opt/splunkforwarder/etc/system/local/outputs.conf:server = 10.8.16.65:9997               ## Set itself point to indexer ;  2 steps both need to login the forwarder. 
+/opt/splunkforwarder/etc/system/local/outputs.conf:[tcpout-server://10.8.16.65:9997]
+}
+
+--------------------------------------Gee , what is a light forwarder ? 
+To enable the light forwarder mode, enter:
+splunk enable app SplunkLightForwarder -auth <username>:<password>
+
+--------------------------------------Just the way you already know . 
+Start forwarding activity from the CLI
+To access the CLI, first navigate to $SPLUNK_HOME/bin/.
+
+To start forwarding activity, specify the receiver with the splunk add forward-server command:
+splunk add forward-server <host>:<port> -auth <username>:<password>
+
+To end forwarding activity, enter:
+splunk remove forward-server <host>:<port> -auth <username>:<password>
+
+
+-----------------------------------On Server ； 
+http://docs.splunk.com/Documentation/Splunk/6.2.7/Forwarding/Enableareceiver
+
+###  Set up receiveing via Web ,[CLI] ,or inputs.conf  
+1 Settings
+2 Forwarding and receiving .
+3 Add new -- Receive data
+4 Specify tcp port you want to receive data ;
+5 Save and restart ; 
+
+{ well 
+sword for vince: 
+tcp        0      0 0.0.0.0:9997            0.0.0.0:*               LISTEN     
+tcp        0      0 10.8.16.65:9997         10.8.17.80:45932        ESTABLISHED
+}
+
+### Via CLI
+CLI : splunk enable listen <port> -auth <username>
+
+### Fuck config file . inputs.conf .  take an eye after CLI .
+[splunktcp://9997]
+disabled = 0
+
+
+### remember to check the log ；TroubleShooting ；
+splunkd.log
+
+$SPLUNK_HOME/var/log/splunk/splunkd.log
+$SPLUNK_HOME/var/log/splunk/metrics.log
+$SPLUNK_HOME/var/log/splunk/license_audit.log
+
+
+### Testing on Server ; 
+vince@ubuntu:~$ sudo -H -u splunk $SPLUNK_HOME/bin/splunk list monitor
+Monitored Directories:
+	$SPLUNK_HOME/var/log/introspection
+		/opt/splunk/var/log/introspection/disk_objects.log
+		/opt/splunk/var/log/introspection/http_event_collector_metrics.log
+Monitored Files:
+	$SPLUNK_HOME/etc/splunk.version
+	/opt/splunk/var/log/splunk/web_access.log
+	
+### 
+./splunk add monitor /var/log/
+
+
+##################### getting start [Adding the data] ,where SE store data ; well I dont' care ..
+http://docs.splunk.com/Documentation/Splunk/6.2.7/SearchTutorial/AboutgettingdataintoSplunk
+
+### Types of data Source:
+	Files and directories: A lot of data you might be interested in comes directly from files and directories.
+	Network events: Splunk can index remote data from any network port and SNMP events from remote devices.
+
+## what SE can Index ; 
+Splunk Enterprise transforms your data into a series of events that consist of searchable fields. 
+
+
+### How to specify data inputs ；               
+Apps  :offer preconfigured inputs for various types of data http://docs.splunk.com/Documentation/Splunk/6.2.7/Data/Usingapps  ## seems like can't be used.
+Splunk web
+CLI  
+
+###You can configure Splunk Enterprise to accept an input on any TCP or UDP port.  ### [wow] ; 
+http://docs.splunk.com/Documentation/Splunk/6.2.7/Data/Monitornetworkports
+Via
+	web
+	cli
+	inputs.conf .
+
+### Than
+
+
+
+---------------------------------------Notice:
+### Important: The deployment server cannot be a deployment client of itself.
+#### For a new forwarder ,we need to act it as a deployment client ;  
+### Run as no-root user
+2. splunk account  -- auto
+3. chown -R splunk:splunk $SPLUNK_HOME --auto ? 
+4. #Getting start as no-root and no-splunk account ;
+		sudo -H -u splunk $SPLUNK_HOME/bin/splunk start
+5.
+### After you upgrade the client,need a restart .or else the client will appear twice in the client list 
+### The receiver is either a Splunk Enterprise indexer (the typical case) or another forwarder
+### In summary, you only need to install the app for the forwarder's OS on the receiver (or search head) if it will be performing searches on the forwarded OS data.
+### Note: You cannot forward data across a proxy, because the communication between forwarder and receiver does not use the HTTP protocol.
+
+------------------------------------------
+sudo /etc/init.d/zamplus-robots restart
+
+
+    1  history 
+    2  cd /usr/local/robots/data/model_common/
+    3  ls
+    4  cat model_process.json 
+    5  sudo /etc/init.d/zamplus-robots restart 
+    6  curl 127.0.0.1:13089
+    7  history 
+
+
+    4  ls /var/crash/
+    5  ll -t /var/crash/_usr_local_robots_bin_general_bidding 
+    6  date
+    7  tail -f /var/log/robots/log/service.all.log
+    8  curl 127.0.0.1:13089
+    9  netstat -an |grep 13089
+   10  tail -f /var/log/robots/log/service.all.log
+   
+   tail -f /var/log/robots/log/service.all.log |grep -P '(ERROR|WARN|INIT)'
+
+vxp
+
+
+
+
+---------------------------- 思考 一下 自动化操作 ；
+自动化的操作；
+
+所有步骤均在 
+ansible 循环处理 ；{sort是否可以处理？}
+
+ansible 貌似可以解决 输入sudo 密码的问题 ；
+ 
+替换操作呢！ 文件的精确替换；这一部 ，用sed 也可以解决； 
+
+等待 stop，start操作完成， service restart && grep 日志关键字 && curl 端口 && echo $？
+
+不适合自动运行下一台呢，那就指定一台，获取命令参数 
+ 
+执行下一台 ；
+
+关键日志 出现； 
+关键字一
+[INIT_ROBOTS] zamplus robots 3.0 starting...
+关键字二，成功启动；
+[INIT_ROBOTS] zamplus robots 3.0 success initialized
+
+
+执行就不会有太大问题； 
+curl 127.0.0.1:13089  
+
+------------------------------
+for i in `cat robot`;do ssh i 'grep -q "startree,lr" /usr/local/robots/data/model_common/model_process.json && echo $?';done
