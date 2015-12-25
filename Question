@@ -32,6 +32,39 @@ hostname = HOST_DICT.get(env.host_string)
  83     if  hostname:
  84         sudo('echo "%s" > /etc/hostname'%hostname)
  85         sudo('hostname %s'%hostname)
+-----------
+
+
+ 思考 一下 自动化操作 ；
+自动化的操作；
+
+所有步骤均在 
+ansible 循环处理 ；{sort是否可以处理？}
+
+ansible 貌似可以解决 输入sudo 密码的问题 ；
+ 
+替换操作呢！ 文件的精确替换；这一部 ，用sed 也可以解决； 
+
+等待 stop，start操作完成， service restart && grep 日志关键字 && curl 端口 && echo $？
+
+不适合自动运行下一台呢，那就指定一台，获取命令参数 
+ 
+执行下一台 ；
+
+关键日志 出现； 
+关键字一
+[INIT_ROBOTS] zamplus robots 3.0 starting...
+关键字二，成功启动；
+[INIT_ROBOTS] zamplus robots 3.0 success initialized
+
+
+执行就不会有太大问题； 
+curl 127.0.0.1:13089  
+
+------------------------------
+for i in `cat robot`;do ssh i 'grep -q "startree,lr" /usr/local/robots/data/model_common/model_process.json && echo $?';done
+
+
 
 
 ---------------------------------------
@@ -80,8 +113,4 @@ zampda3_TRK
 Zampda3_UC
 
 ------------------
-
-
-
-
 

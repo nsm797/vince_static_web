@@ -3,18 +3,25 @@ Email : vincent@zamplus.com  email
 Jira & Confluence: vincent-nan              
 PD you should be one ? all in one ?  in your first company ,than you always did. 
 
-TS   172.22.0.0   Out 221.228.208.0 
+TS   172.22.0.0   Out 221.228.208.0
 BYS  10.77.77.0   Out 202.181.213.0
-Micro azure 10.66     
+Micro azure 10.66       
 
 DNS	172.22.40.250            
 OP03	172.22.40.251                    #Dev only has ro，checking log permit.
 
 hadoop 172.22.0 ~ 15 ; 
-hadoop transfer 172.22.16.0/21 
-hadoop insert   172.22.24.0/21
+hadoop transfer 172.22.16.0/21  
+hadoop insert   172.22.24.0/21   
 DB: 172.22.32.0/21 DB  
 Control: 172.22.40.0/21 
+
+Disk usage problem： Bony and JiangBing take charge of these hadoop servers . you need to take care others ; 
+172.22.5.x
+172.22.6.x
+172.22.16.x
+172.22.10.x
+172.22.49.x   
 
 
 -------------My Working area (Azure); I will take charge this .
@@ -34,15 +41,27 @@ DataNode; Yarn-Nodemanager ;Storm-Supervisor ;Geode? Hbase-RegionServer [Schedul
 DataNode; Yarn-Nodemanager ;Storm-Supervisor ;Geode? Hbase-RegionServer,Kafka-Brokers [Hub]
 via   jerry,albin ;  jeffrey(wangkai) in on 21,22
 jdk  
-10.66.66.21   apacheBench 
+10.66.66.21   apacheBench
 10.66.66.22   apachebench
-10.66.66.23 
+10.66.66.23   
+
+10.8.8.208 git.dev.zamplus.com 
+
+10.66.66.38		nginx+php  :ftp download server ；
+
+############# Splunk ; 
+http://az-public01.chinacloudapp.cn:8000/zh-CN/app/search/search
+10.66.66.37
 
 
--------------------Out of my area ?
-Ubuntu : pTracking 
+66.91 
+############# Local splunk ;
+http://10.8.16.65:8000/zh-CN/manager/launcher/forwardreceive
+
+-------------------Out of my area ? splunk here；
+Ubuntu : pTracking (ZAMP tracking data[r]: For SmartPixel & ad tracking [can't read]  ) 
 10.66.66.90
-10.66.66.91
+10.66.66.91 -- installed
 
  via shengjun ; 
 172.22.25.2  ;SSO & fe3 
@@ -57,9 +76,7 @@ http://wiki.dev.zamplus.com
 重IO 不推荐 用docker ； 
 重CPU，内存
 --------------
-http://az-public01.chinacloudapp.cn:8000/zh-CN/app/launcher/home
-Account:Developer01
-PD:Developer)!
+
 --------------
 Zamplus考核期间工作目标：计分的，
 
@@ -78,3 +95,9 @@ presentation ：
 
 
 枚举和遍历 ；
+
+salt-agent
+---------------------------
+
+Red Hat Enterprise Linux Server release 6.4 (Santiago)
+ 

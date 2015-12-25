@@ -31,61 +31,56 @@ Enterprise 实例》手册中的“配置部署客户端”
 转发器必须成功连接到部署服务器。
 转发器配置 为 客户端 配置，部署服务器可管理 转发器 的配置； 
 
-不能将 windows 和 unix 放到一个服务器类； 
+开源的 grafana
+为zabbix 做一个 漂亮的图；
+特点：
+	1 主机 和 监控对象筛选；
+	2 为每个目标限定范围； 
+	3 支持 模板 仪表盘；（为特定 集群，服务器组，应用程序的迅速改变 显示 数据；）
+	4 支持注释：（在图形 里 显示 zabbix事件； ）
+	5 显示确认的问题；
 
-10.66.66.24
-10.66.66.25
-10.66.66.26
-10.66.66.15
-10.66.66.16
-10.66.66.17
-10.66.66.18
-10.66.66.19
-10.66.66.21 -
-10.66.66.22 -
-10.66.66.23 -
+--------
+监控点； 
 
-还有splunk 那个东西 没点日志，没点客户端，分析一下，研究起来还是挺恶心的
-内容太多了； 
+找齐伟的那个问题 ； 取mango的延时； 100% 的时候 不准确， 40 %的时候 ，趋势相对平缓； 具体得查查脚本了； 
+找Robo的那个问题；  已经得到 数据； 不知道如何看，CM - kafka agent-kafkaserver - pump - Bridge ；
 
-ansible kafkanodes -m command -a 'date'
+grafana ； 监控业务逻辑 ；       --- 1，自动刷新； 2 如何查看具体项目？ 3 如何自定义模板； 
+																	   4，熟悉监控系统 ，从什么地方看起呢-- 要监控的页面是什么？ 问问唐唐 ； 
+zabbix ；监控机器性能，服务进程，
+
+--------
+
+### Receiver doesn't accept new connections on it's receiving port ;   
+However, sometimes (on Windows machines only) the indexer is unable to reopen the port once its queue is unblocked. To remediate, you must restart(重新启动) the indexer.
+
+you can set the receiver's stopAcceptorAfterQBlock attribute in inputs.conf to a higher value.
+so that it does not close the port as quickly. 
+This attribute(归属) determines the amount(数量) of time the indexer waits before closing the port. The default is 300 seconds
+
+#### Confusing(混乱) the receiver's receiver and management ports "
+####If you setting up a forwarder, you specify(指定) the receiver's hostname/IP_address and port. if you specify a wrong IP or port ;
+splunkd.log:03-01-2010 13:35:28.653 ERROR TcpInputFd - SSL Error = error:140760FC:SSL routines:SSL23_GET_CLIENT_HELLO:unknown protocol
+splunkd.log:03-01-2010 13:35:28.653 ERROR TcpInputFd - ACCEPT_RESULT=-1 VERIFY_RESULT=0
+
+### Closed receiver socket ；关套接字，这跟一里说的port有什么区别呢？　我勒个日；　都是队列满了造成的；
+If a receiving indexer queues become full, it closes the receiver socket(插座) to prevent additional(附加的) forwarders from connecting to it.
+The receiver socket reopens(再开) automatically(自动地) when the queue gets unclogged.
+### 日志记录 
+The following warning message will appear in splunkd.log if the socket gets blocked:
+Stopping all listening ports. Queues blocked for more than N seconds. 
+This message will appear when the socket(插座) reopens(再开):
+Started listening on tcp ports. Queues unblocked. 
+### ;
 
 
---prefix=/opt/php 
+初步看只要我配 了 就可以 通过； 
 
 
-shengjun:
-    user.present:
-        - fullname: shengjun
-        - shell: /bin/bash
-        - home: /home/shengjun
-        - order: 1
-    ssh_auth:
-        - present
-        - user: shengjun
-        - source: salt://users/files/sshkey/shengjun.pem.pub
 
-/home/shengjun:
-    file.directory:
-        - user: shengjun
-        
-        
-jerry:
-    user.present:
-        - fullname: jerry
-        - password: ABj3E1Xb.cQBE
-        - shell: /bin/bash
-        - home: /home/jerry
-    ssh_auth:
-        - present
-        - user: jerry
-        - source: salt://users/files/sshkey/jerry.pem.pub
 
-/home/jerry:
-    file.directory:
-        - user: jerry
 
---------------
 well 
 	
 shengjun 给他们建目录；和 权限；  
@@ -111,221 +106,274 @@ admin	Administrator	changeme@example.com	None	launcher	1
 
 10.8.8.230  
 
-----
-Intermediate 媒介
-Conversely(相反的), 
-coordinate
-consolidate
-illustrate
-you explicitly(明确地) set it t
-----
+--- Splunk 
+连接性； 
+indexer 上 可以取到 forwarder上的data ； 
 
 
-### Topology ;
-Indexer clusters   ； index replicatoin； 
-forwarder cluster  
-
-Receivers  -  indexer ；
--------------------------------------
-http://docs.splunk.com/Documentation/Splunk/6.2.7/Forwarding/Deployanixdfmanually#Install_the_universal_forwarder
-
-### INSTALL forwarder is just like SE ;  
-### 2 packeges's diff is just name and install directory ; 
-rpm -i splunkforwarder_<package_name>.rpm ## /opt/splunkforwarder 
-rpm -i splunk_<package_name>.rpm  ## /opt/splunk  
-
-### why we need to migrate forwarder ? ["Migrate a nix forwarder" ]  A lighter to a latest version ? 
-
-### start : 
-splunk start
-
-### accespt license automatically ;
-splunk start --accept-license   
-
-### Auto start  ### This way will make splunk running as root . how can I resolve this ? 
-splunk enable boot-start ; 
+#######For backup； 
+http://docs.splunk.com/Documentation/Splunk/6.3.1/Admin/Backupconfigurations
+http://docs.splunk.com/Documentation/Splunk/6.3.1/Indexer/Backupindexeddata
 
 
-### Set the forwarder as a deployment client !  Specify the deloyment server  ! WOW ? host and port set as  ? port 8089 ?  
-### Or edit deploymentclient.conf ? I hate this way . <after using CLI ,check this config>
-splunk set deploy-poll <host>:<port>
-splunk restart    ### need restart to take effect .. 
+齐伟；
+display rule ；
+延迟
 
-###  Here wirte the index server's hostname and port .  port is 9997 by default ?
-splunk add forward-server <host>:<port> -auth <username>:<password>
+bridge -- insert QPS ； 
 
-#####
-<username>:<password> is the username and password for logging into the forwarder. By default, these are "admin:changeme" 
-###Change pd .
-"splunk edit user admin -password <new password> 
+------------------------
+mactrounk   ； 流量和广告位 ，由百度，新浪这些 发给我们 （10000个qps，即10000个广告位， 允许你的反应时间 100ms）
 
-####Set a client name .  need a restart . default is uuid ? 
-[deployment-client] 
-...
-clientName = Fflanda-LINUX1
+已下的所有流程 ，控制在 60ms ；
 
-{
-/opt/splunkforwarder/etc/system/local/deploymentclient.conf:targetUri = 10.8.16.65:8089   ## Set itself as a deployment client, Also point it to deployment Server .  
-# Configure forwarders 
-/opt/splunkforwarder/etc/system/local/outputs.conf:server = 10.8.16.65:9997               ## Set itself point to indexer ;  2 steps both need to login the forwarder. 
-/opt/splunkforwarder/etc/system/local/outputs.conf:[tcpout-server://10.8.16.65:9997]
-}
+banking  -- 查看广告主 是否有钱，有则投放 广告；  ？ 如何知道广告主是否有钱呢？ 
+robots --   查看 广告位 价格是否合理， 合理 则出价； 
+frequency -- ； 比如已经给这个 人投放了 2个广告，则避免 再给这个人投放第三次；
+cookie-mapping -- ； 查看这个人是不是我们的用户；
+	新用户？ -- 写入kafka ；  bridge 会来取 这个数据进行 再处理； 
+	老用户？ -- 则排除；后 记录到 【？？？】
+render -- ；广告渲染； 投放；  何时？我们就投放 平台广告；
+Tracking --- 计算 投放 广告的总量，计算用户点击 的 广告量；
+【？？？】 -- ；  cookie 本身有时间限制；我们记录后， 如果过了期，如果再遇到，在其他地方再匹配我们的用户；？？？   
+bridge ；  接受kafka 数据；  拿着这些 新 cookie ； 来观察 用户 在哪些平台 浏览过我们 的数据；
+logcollect； 所有服务的 日志，放入 hadoop计算，看看我们的投放效果； 
 
---------------------------------------Gee , what is a light forwarder ? 
-To enable the light forwarder mode, enter:
-splunk enable app SplunkLightForwarder -auth <username>:<password>
-
---------------------------------------Just the way you already know . 
-Start forwarding activity from the CLI
-To access the CLI, first navigate to $SPLUNK_HOME/bin/.
-
-To start forwarding activity, specify the receiver with the splunk add forward-server command:
-splunk add forward-server <host>:<port> -auth <username>:<password>
-
-To end forwarding activity, enter:
-splunk remove forward-server <host>:<port> -auth <username>:<password>
+-----------------------
+找不到人 ？ 删日志吗？ 
 
 
------------------------------------On Server ； 
-http://docs.splunk.com/Documentation/Splunk/6.2.7/Forwarding/Enableareceiver
-
-###  Set up receiveing via Web ,[CLI] ,or inputs.conf  
-1 Settings
-2 Forwarding and receiving .
-3 Add new -- Receive data
-4 Specify tcp port you want to receive data ;
-5 Save and restart ; 
-
-{ well 
-sword for vince: 
-tcp        0      0 0.0.0.0:9997            0.0.0.0:*               LISTEN     
-tcp        0      0 10.8.16.65:9997         10.8.17.80:45932        ESTABLISHED
-}
-
-### Via CLI
-CLI : splunk enable listen <port> -auth <username>
-
-### Fuck config file . inputs.conf .  take an eye after CLI .
-[splunktcp://9997]
-disabled = 0
 
 
-### remember to check the log ；TroubleShooting ；
-splunkd.log
-
-$SPLUNK_HOME/var/log/splunk/splunkd.log
-$SPLUNK_HOME/var/log/splunk/metrics.log
-$SPLUNK_HOME/var/log/splunk/license_audit.log
+Hi ，Robo ，
 
 
-### Testing on Server ; 
-vince@ubuntu:~$ sudo -H -u splunk $SPLUNK_HOME/bin/splunk list monitor
-Monitored Directories:
-	$SPLUNK_HOME/var/log/introspection
-		/opt/splunk/var/log/introspection/disk_objects.log
-		/opt/splunk/var/log/introspection/http_event_collector_metrics.log
-Monitored Files:
-	$SPLUNK_HOME/etc/splunk.version
-	/opt/splunk/var/log/splunk/web_access.log
+已知的流程： 
+	cookieMapping 匹配用户； 检测到新的用户，将新cookie记录 写入kafka ； 
+	bridge 将数据从 kafaka取出 进行再处理 ；
+
+需要考虑的问题：
+ 我们担心 cookieMapping的输出，和bridge的输入,中间可能会有丢失请求队列的情况；
+ 可不可以开发程序，将一个时间段，cookieMapping 中查到的新cookie的记录量 ，和bridge从kafka中取出的量 ，做一个趋势图做一个对比？ 
+
+相同时间段；
+CookieMapping 生成的 总量；  趋势图 ？   
+VS
+bridge 从kafka中接受 到的 数据量； 趋势图？
+
+
+熟悉 监控 granfna ； 
+	我们需要注意哪些监控 ，
+		哪几类？ 
+		登录方法；
+		编辑方法；
+	如何编辑这些监控；
 	
+	
+	
+我看这个目录下只有三天内的日志； 
+$ ssh 10.66.66.91 "ls -lSh /data/tracking/statistic" |more
+total 13G
+-rw-r--r-- 1 zampuser root   86M Dec 22 10:20 track-p-201512221020.log
+-rw-r--r-- 1 zampuser root   81M Dec 21 09:50 track-p-201512210950.log
+-rw-r--r-- 1 zampuser root   74M Dec 23 09:40 track-p-201512230940.log
+-rw-r--r-- 1 zampuser root   73M Dec 23 09:30 track-p-201512230930.log
+-rw-r--r-- 1 zampuser root   73M Dec 23 09:20 track-p-201512230920.log
+
+$ ssh 10.66.66.90 "ls -lSh /data/tracking/statistic" |more
+total 13G
+-rw-r--r-- 1 zampuser root   86M Dec 22 10:20 track-p-201512221020.log
+-rw-r--r-- 1 zampuser root   81M Dec 21 09:50 track-p-201512210950.log
+-rw-r--r-- 1 zampuser root   74M Dec 23 09:40 track-p-201512230940.log
+-rw-r--r-- 1 zampuser root   74M Dec 23 09:30 track-p-201512230930.log
+-rw-r--r-- 1 zampuser root   73M Dec 23 09:20 track-p-201512230920.log
+
+---------Schema 1 
+
+-- 因为有 500M/day 的限制，每天抽几个日志 一个新的日志目录，比如/data/tmpStatistic，     
+-- 直接monit这个目录  ； 
+-- 控制每天的copy的量，ls更新时间最新的5个日志；排除最新的日志， 计算大小， 如果小于500M 则导入 ；  
+
+
+-- 1 装Splunk forwarder包  
+-- 2 建立新目录 ；定期转移日志；  ---- 这个目录会一天天增大 -- 定期删除 -- 删除后，splunk岂不是读不到了，【确定的】 导入一个月；500*30 = 15000M = 15G 呢
+
+-- 3 控制这个目录的大小； 
+-- 4 监控的就是缺失的数据， 比如我们每天监控的都是 固定几个时间段的日志； 【初期就只能这样了】
+
+---------Schema 2
+-- 就要一个 连续 时间段的 日志； 不太现实；只有的三天的日志；
+ 
+-- 不支持正则？ 命令行添加， 循环吧 ；
+-- 
+
+--- 监视一下我们的Server 根；
+azureuser@AZ-Splunk:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        29G  3.5G   25G  13% /
+udev            6.9G   12K  6.9G   1% /dev
+tmpfs           1.4G  276K  1.4G   1% /run
+none            5.0M     0  5.0M   0% /run/lock
+none            6.9G   12K  6.9G   1% /run/shm
+none             64K     0   64K   0% /etc/network/interfaces.dynamic.d
+/dev/sdb1       596G   70M  566G   1% /mnt
+
+-- 离散的日志， 循环导入 ，达到阀值； 第一二次导入，计数1，2；TM再导入就超过了，
+-- 只能把 离散的日志 写入一个大日志里，一次导入； ok；
+1 超过 ；
+
+
+-rw-r--r-- 1 zampuser root 42288536 Dec 21 00:10 /data/tracking/statistic/track-p-201512210010.log
+-rw-r--r-- 1 zampuser root   457481 Dec 21 00:10 /data/tracking/statistic/track-s-201512210010.log
+-rw-r--r-- 1 zampuser root     1262 Dec 21 00:09 /data/tracking/statistic/track-c-201512210010.log
+
+ls -t /data/tracking/statistic/track-p
+
+more 然后echo 进去的话，应该不用排除第一行 ；
+
+ls -lrt /data/tracking/statistic/track-c-* |awk -F " " '{print $NF}' |while read lines;do cat $lines >> /data/tracking/statistic/temp/track-c-21-22-23-24.log;echo "$lines has done";done 
+ls -lrt /data/tracking/statistic/track-s-* |awk -F " " '{print $NF}' |while read lines;do cat $lines >> /data/tracking/statistic/temp/track-s-21-22-23-24.log;echo "$lines has done";done 
+ls -lrt /data/tracking/statistic/track-p-* |awk -F " " '{print $NF}' |while read lines;do cat $lines >> /data/tracking/statistic/temp/track-p-21-22-23-24.log;echo "$lines has done";done 
+
+
+watch -n 3  -d df -h ## 3s 观察 磁盘 数值 变化； 
+
+/dev/mapper/datavg-ptracking  295G   13G  267G   5% /data/tracking/statistic            
+
+那如果你往 /data/tmp 目录下写日志，可不是写在这个目录下了，而是 / 下了，换句话说，把根写满了you 就SB了； {SOX} 级别的吧 ； 
+
+小心没有坏处； 
+
+####
+*/10 * * * * bash /usr/local/zamplus-ptracking-server/bin/log_rotate.sh 
+# log clean 
+5 0 * * * bash /usr/local/zamplus-ptracking-server/bin/log_clean.sh
+
+find ${_log_statistic_dir}/ -type f -mtime +2 -name "*.log" -exec rm -rf {} \;
+
+还好，丫只是 把 log 关键字 给干掉； 重命名，让丫不带log就好；
+
 ### 
-./splunk add monitor /var/log/
+
+10.66.66.37 
+vince@AZ-TRK02:~$ df -h
+Filesystem                    Size  Used Avail Use% Mounted on
+/dev/sda1                      29G   13G   15G  47% /
+udev                          3.4G   12K  3.4G   1% /dev
+tmpfs                         698M  292K  697M   1% /run
+none                          5.0M     0  5.0M   0% /run/lock
+none                          3.5G   12K  3.5G   1% /run/shm
+none                           64K     0   64K   0% /etc/network/interfaces.dynamic.d
+/dev/sdb1                     281G   63M  267G   1% /mnt
+/dev/mapper/datavg-ptracking  295G   24G  256G   9% /data/tracking/statistic
+
+#######
+
+indexer  如果安装了forwarder ；破坏了原包？ 卸载掉，而且安装目录也不同， 会不会影响用户呢！ 这个比较恶心，要是在我自己的环境里还好； -- 貌似没有影响；服务的运行期间； 
 
 
-##################### getting start [Adding the data] ,where SE store data ; well I dont' care ..
-http://docs.splunk.com/Documentation/Splunk/6.2.7/SearchTutorial/AboutgettingdataintoSplunk
+老板要全部导入 13G 
+	
+------
+如何让领导 快速 熟悉这个过程？ 重点，一目了然；方便快速指定方案； 
 
-### Types of data Source:
-	Files and directories: A lot of data you might be interested in comes directly from files and directories.
-	Network events: Splunk can index remote data from any network port and SNMP events from remote devices.
-
-## what SE can Index ; 
-Splunk Enterprise transforms your data into a series of events that consist of searchable fields. 
+source=/var/log/dpkg.log
 
 
-### How to specify data inputs ；               
-Apps  :offer preconfigured inputs for various types of data http://docs.splunk.com/Documentation/Splunk/6.2.7/Data/Usingapps  ## seems like can't be used.
-Splunk web
-CLI  
-
-###You can configure Splunk Enterprise to accept an input on any TCP or UDP port.  ### [wow] ; 
-http://docs.splunk.com/Documentation/Splunk/6.2.7/Data/Monitornetworkports
-Via
-	web
-	cli
-	inputs.conf .
-
-### Than
+salt 太慢了；
 
 
+ ansible azuredmp -m shell -a '/etc/init.d/salt-minion restart'
+ 
+ 
 
----------------------------------------Notice:
-### Important: The deployment server cannot be a deployment client of itself.
-#### For a new forwarder ,we need to act it as a deployment client ;  
-### Run as no-root user
-2. splunk account  -- auto
-3. chown -R splunk:splunk $SPLUNK_HOME --auto ? 
-4. #Getting start as no-root and no-splunk account ;
-		sudo -H -u splunk $SPLUNK_HOME/bin/splunk start
-5.
-### After you upgrade the client,need a restart .or else the client will appear twice in the client list 
-### The receiver is either a Splunk Enterprise indexer (the typical case) or another forwarder
-### In summary, you only need to install the app for the forwarder's OS on the receiver (or search head) if it will be performing searches on the forwarded OS data.
-### Note: You cannot forward data across a proxy, because the communication between forwarder and receiver does not use the HTTP protocol.
+server {
+    listen 8090;
+    server_name 10.66.66.26;
+    root        /usr/local/temp/;
+    autoindex on;
+    autoindex_exact_size off;
+    autoindex_localtime on;
 
-------------------------------------------
-sudo /etc/init.d/zamplus-robots restart
+}
 
-
-    1  history 
-    2  cd /usr/local/robots/data/model_common/
-    3  ls
-    4  cat model_process.json 
-    5  sudo /etc/init.d/zamplus-robots restart 
-    6  curl 127.0.0.1:13089
-    7  history 
+[vince@CPIC-DMP11 conf.d]$ ls /usr/local/temp/
+nginx+php1.2-full.tar.gz
 
 
-    4  ls /var/crash/
-    5  ll -t /var/crash/_usr_local_robots_bin_general_bidding 
-    6  date
-    7  tail -f /var/log/robots/log/service.all.log
-    8  curl 127.0.0.1:13089
-    9  netstat -an |grep 13089
-   10  tail -f /var/log/robots/log/service.all.log
+
+Well
+一 首先要下载包；
+  wget http://azure-cpic.chinacloudapp.cn:8080/nginx+php1.2-full.tar.gz
    
-   tail -f /var/log/robots/log/service.all.log |grep -P '(ERROR|WARN|INIT)'
+	或者访问 下面的web都可以下载； 
+	http://azure-cpic.chinacloudapp.cn:8080 
 
-vxp
+二.可能碰到的问题 ；
+1 开始安装 ，
+[azureuser@CPIC-DMP22 nginx+php1.2-full]$ sudo script
+centos.sh  freetype-2.4.12.tar.gz  init.d.php-fpm5.6      libmcrypt-2.5.8.tar.gz  mcrypt-2.6.8.tar.gz   nginx-1.6.2.tar.gz  pcre-8.12.tar.gz  typescript
+conf       init.d.nginx            init.d.php-fpm-centos  libxml2-2.7.8.tar.gz    mhash-0.9.9.9.tar.gz  nginx-centos-conf   php-5.6.6.tar.gz  ubuntu.sh
+[root@CPIC-DMP22 nginx+php1.2-full]# sh centos.sh 
+
+2 安装过程非常慢，可以watch -n 3 查看nginx+php1.2-full 目录下文件的更新状况；
+
+3。终于安装完成；
+=========================================================================
+===========================add nginx and php-fpm on startup completed====================
+
+4 执行下面的操作；
+# sudo cp /opt/nginx/etc/nginx/nginx.conf  /opt/nginx/etc/nginx/conf/nginx.conf
+# sudo mkdir /opt/run/
+
+$ sudo mv /opt/php /opt/php-fpm
+# 编辑/etc/init.d/php-fpm ，改成这一项 php_fpm_BIN=/opt/php-fpm/sbin/php-fpm
+# sudo mkdir /opt/log/php-fpm/
+$ sudo mkdir /opt/run/php-fpm/
+
+5 脚本/etc/init.d/php-fpm ， /etc/init.d/nginx 就都应该可以用了；  如果还有问题，可以看看具体报什么错；
+# /etc/init.d/nginx configtest
+# /etc/init.d/php-fpm start  
 
 
 
 
----------------------------- 思考 一下 自动化操作 ；
-自动化的操作；
-
-所有步骤均在 
-ansible 循环处理 ；{sort是否可以处理？}
-
-ansible 貌似可以解决 输入sudo 密码的问题 ；
- 
-替换操作呢！ 文件的精确替换；这一部 ，用sed 也可以解决； 
-
-等待 stop，start操作完成， service restart && grep 日志关键字 && curl 端口 && echo $？
-
-不适合自动运行下一台呢，那就指定一台，获取命令参数 
- 
-执行下一台 ；
-
-关键日志 出现； 
-关键字一
-[INIT_ROBOTS] zamplus robots 3.0 starting...
-关键字二，成功启动；
-[INIT_ROBOTS] zamplus robots 3.0 success initialized
 
 
-执行就不会有太大问题； 
-curl 127.0.0.1:13089  
 
-------------------------------
-for i in `cat robot`;do ssh i 'grep -q "startree,lr" /usr/local/robots/data/model_common/model_process.json && echo $?';done
+
+
+
+
+
+[vince@CPIC-DMP11 conf.d]$ sudo more /opt/nginx/logs/nginx.pid 
+[vince@CPIC-DMP11 conf.d]$ sudo more /opt/run/nginx.pid 
+7676
+
+	reload)
+
+		echo -n "Reload service $NAME... "
+
+		if netstat -tnpl | grep -q nginx; then
+			/usr/bin/nginx -s reload
+			echo " done"
+		else
+			echo "$NAME is not running, can't reload."
+			exit 1
+		fi
+
+---------------
+远程 连接 机房；  无法提供yum ， 对应包无法安装 
+--提取出yum 源的对应的rpm； 把这些rpm 都弄到 源码包里；  
+--让我今天搞定 ； 
+--robo下午 要过去 ；  
+先和周总 说这个问题； 
+
+
+
+
+cp /etc/yum.conf /etc/yum.conf.nginxphp > /dev/null 2>&1;echo "========================================================================="
+sed -i 's:exclude=.*:exclude=:g' /etc/yum.conf > /dev/null 2>&1
+
+
+      mv -f /etc/yum.conf.nginxphp /etc/yum.conf > /dev/null 2>&1

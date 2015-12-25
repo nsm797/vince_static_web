@@ -1,7 +1,7 @@
 #### Setup my account£¬ seems like Under my acount it also can runs£» 
 vince@TS-OP03:~$ sudo salt -G "ipv4:10.66.66.90" state.sls users.vince
 
-sudo salt -G "ipv4:172.22.50.154" state.sls users.vince
+sudo salt -G "ipv4:10.66.66.37" state.sls users.vince
 sudo salt -G "ipv4:10.66.66.21" state.sls users.jerry
 sudo salt -G "ipv4:221.228.208.56" state.sls users.wangkai
 
@@ -29,6 +29,9 @@ question1 £º
 
 Steps:
 	1. Added git (can't find git domain; can't ping git; can't access sso[test] ,SSO ? )
+		[root@CPIC-DMP11 local]# route add -net 10.8.8.0/24 gw 0.0.0.0
+			SIOCADDRT: Invalid argument
+		[root@CPIC-DMP11 local]# route add -net 10.8.8.0/24 gw 10.66.66.1
 	2. Added an nginx website ,setup php & nginx . (fixed php config problem)
   3. Added web root , set zampread own via zlogin (web: WOW, the way is impressing).
 	4. Added host record in file. fixed step 2 . 
@@ -89,6 +92,36 @@ Then we need to restart again .
 Until the process is normal .
 # ps -ef |grep billing
 root     31040     1 99 16:41 ?        00:00:08 /usr/local/billing-server/bin/billing-server --config /usr/local/billing-server/conf/billing.conf --daemon
+
+----------------------Deployments on Robots servers ;
+http://grafana.dev.zamplus.com:8813/#/dashboard/db/30-robots
+sudo /etc/init.d/zamplus-robots restart
+
+
+    1  history 
+    2  cd /usr/local/robots/data/model_common/
+    3  ls
+    4  cat model_process.json 
+    5  sudo /etc/init.d/zamplus-robots restart 
+    6  curl 127.0.0.1:13089
+    7  history 
+
+
+    4  ls /var/crash/
+    5  ll -t /var/crash/_usr_local_robots_bin_general_bidding 
+    6  date
+    7  tail -f /var/log/robots/log/service.all.log
+    8  curl 127.0.0.1:13089
+    9  netstat -an |grep 13089
+   10  tail -f /var/log/robots/log/service.all.log
+   
+   tail -f /var/log/robots/log/service.all.log |grep -P '(ERROR|WARN|INIT)'
+
+vxp
+
+   tail -f /var/log/robots/log/service.all.log |grep "success initialized" 
+
+
 
 --------------------------------------------------
 Initialize Microsoft cloud servers : Virtual Servers . 
