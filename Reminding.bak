@@ -16,6 +16,11 @@ hadoop insert   172.22.24.0/21
 DB: 172.22.32.0/21 DB  
 Control: 172.22.40.0/21 
 
+NGINX AGENT :
+221.228.208.46/172.22.57.24
+221.228.208.47/172.22.57.25
+Add proxy in here ;/etc/nginx/sites-enabled
+
 Disk usage problem： Bony and JiangBing take charge of these hadoop servers . you need to take care others ; 
 172.22.5.x
 172.22.6.x
@@ -98,6 +103,30 @@ presentation ：
 
 salt-agent
 ---------------------------
-
 Red Hat Enterprise Linux Server release 6.4 (Santiago)
- 
+
+------------INSTALL SALT-CLIENT ; 
+### Added one nameserver "114"
+$ tail -n 2 /etc/resolv.conf 
+nameserver 10.66.66.33
+nameserver 114.114.114.114
+
+###
+$ yum -y update
+$ yum search salt-minion
+$ yum install salt-minion
+$ sudo rpm -qa |grep salt
+salt-2015.5.5-1.el6.noarch
+salt-minion-2015.5.5-1.el6.noarch
+
+然后再 修改 什么配置 文件来着？ 
+
+连接过去，只在外网；
+
+-------------
+TS-W01_172.22.24.25
+
+【LVM 磁盘报警】
+48.1
+48.3
+48.5

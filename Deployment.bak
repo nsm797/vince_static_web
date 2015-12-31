@@ -1,7 +1,7 @@
 #### Setup my account， seems like Under my acount it also can runs； 
 vince@TS-OP03:~$ sudo salt -G "ipv4:10.66.66.90" state.sls users.vince
 
-sudo salt -G "ipv4:10.66.66.37" state.sls users.vince
+sudo salt -G "ipv4:10.77.77.104" state.sls users.vince
 sudo salt -G "ipv4:10.66.66.21" state.sls users.jerry
 sudo salt -G "ipv4:221.228.208.56" state.sls users.wangkai
 
@@ -46,12 +46,41 @@ DNS 172.22.40.250
 
 Add your record manually ### Geee ....
 bind9 reload 
--------------------------------------------------------
-#### Update rpm ； 
-http://192.168.1.201:8877/deploy/admin/   tomtom
+--------------------------------------------Rpm_build ;
+
+
+#### Update rpm ；[rpmbuild] 
+
+RPM factory :192.168.1.201 
+
+
+
+# CASE 1 ; Edit json to here ;  大表推送，新增配置文件； 
+/usr/src/zamplus-src/zamplus-data-update-server-v3/zamplus-data-update-server-v3/usr/local/data-update-server/distribute/release_robots
+Took place the following keywords;
+---"ab_cvr" ;
+---"csv" 
+--- or other things ;
+
+
+
+# CASE 2 ; new file will added in Jira , Edit your file in the right place !
+ 
+
+## Go to the dir 
+/usr/src/zamplus-src/zamplus-data-update-server-v3
+## mv zamplus-data-update-server-v3.tar.gz zamplus-data-update-server-v3-$date.tar.gz
+## tar -zcvf zamplus-data-update-server-v3.tar.gz zamplus-data-update-server-v3
+## Upload this tar.gz to packageMan ;
+
+http://192.168.1.201:8877/deploy/   
 
 click admin 
-search keyword （the rpm）
+-search keyword （the rpm）
+-Upload the file we changed; 
+-Commit what you have done for the rpm ; 
+-Upload ;
+
 locate the version in jira （rpm），click it ；
 
 click “release to unstbale repro”； 
@@ -62,36 +91,13 @@ click “Sync Package” ;
 
 -login the server need to update rpm : 
 
-# apt-get update  
+###### The service we can bounce in page 
+megatron ;
+Robots ;
+zamplus-billing-server
+###### Need to bounce at server; 
+date-update ; [has 2 processed ; so we need to kill TWICE;]
 
-# dpkg -l | grep zamplus
-ii  zamplus-billing-server            1.5.1125..1000                        zampabs billing server(selfmedia)
-- "ii" means it's ok , install the version we need.  
-# apt-get install zamplus-billing-server
-- Checking again . 
-
-# dpkg -l | grep zamplus
-ii  zamplus-billing-server            1.5.1207.1000                         zampabs billing server(media factor,accuen)
-
-- Restart service ；
-# /etc/init.d/zamplus-billing-server restart
-/usr/local/billing-server/bin/billing-server is stopping (pid=48136). done.
-Stopping nginx: nginx.
-/usr/local/billing-server/bin/billing-server is starting... ok (pid=28341
-28446).
-
-Starting nginx: nginx.
--- Some time get out zambie process.   
-# ps -ef |grep billing
-root     28341     1 99 16:32 ?        00:11:48 /usr/local/billing-server/bin/billing-server --config /usr/local/billing-server/conf/billing.conf --daemon
-root     28446     1  2 16:32 ?        00:00:11 /usr/local/billing-server/bin/billing-server --config /usr/local/billing-server/conf/billing.conf --daemon
-
-Then we need to restart again . 
-# /etc/init.d/zamplus-billing-server restart
-
-Until the process is normal .
-# ps -ef |grep billing
-root     31040     1 99 16:41 ?        00:00:08 /usr/local/billing-server/bin/billing-server --config /usr/local/billing-server/conf/billing.conf --daemon
 
 ----------------------Deployments on Robots servers ;
 http://grafana.dev.zamplus.com:8813/#/dashboard/db/30-robots

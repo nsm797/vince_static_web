@@ -12,14 +12,14 @@ CMD ["bash"]
 
 install Docker quicker ;
 make sure the container can runs ; 
-install the splunk on linux ? 
+install the splunk on linux   
 
 Clean and maintain you Work PC 
 
 ÉÏÔØ£º¡¾±¾µØÎŞ·¨Ê¹ÓÃ¡¿
-	×ÀÃæÍÏ¶¯£»
-	Ñ¡ÔñÎÄ¼ş£¬ÈÕ£¬ÄÇ²»ÊÇ
-	
+   ×ÀÃæÍÏ¶¯£»
+   Ñ¡ÔñÎÄ¼ş£¬ÈÕ£¬ÄÇ²»ÊÇ
+   
 Search not executed: The minimum free disk space (5000MB) reached for /opt/splunk/var/run/splunk/dispatch. user=admin.
 
 
@@ -34,11 +34,11 @@ Enterprise ÊµÀı¡·ÊÖ²áÖĞµÄ¡°ÅäÖÃ²¿Êğ¿Í»§¶Ë¡±
 ¿ªÔ´µÄ grafana
 Îªzabbix ×öÒ»¸ö Æ¯ÁÁµÄÍ¼£»
 ÌØµã£º
-	1 Ö÷»ú ºÍ ¼à¿Ø¶ÔÏóÉ¸Ñ¡£»
-	2 ÎªÃ¿¸öÄ¿±êÏŞ¶¨·¶Î§£» 
-	3 Ö§³Ö Ä£°å ÒÇ±íÅÌ£»£¨ÎªÌØ¶¨ ¼¯Èº£¬·şÎñÆ÷×é£¬Ó¦ÓÃ³ÌĞòµÄÑ¸ËÙ¸Ä±ä ÏÔÊ¾ Êı¾İ£»£©
-	4 Ö§³Ö×¢ÊÍ£º£¨ÔÚÍ¼ĞÎ Àï ÏÔÊ¾ zabbixÊÂ¼ş£» £©
-	5 ÏÔÊ¾È·ÈÏµÄÎÊÌâ£»
+   1 Ö÷»ú ºÍ ¼à¿Ø¶ÔÏóÉ¸Ñ¡£»
+   2 ÎªÃ¿¸öÄ¿±êÏŞ¶¨·¶Î§£» 
+   3 Ö§³Ö Ä£°å ÒÇ±íÅÌ£»£¨ÎªÌØ¶¨ ¼¯Èº£¬·şÎñÆ÷×é£¬Ó¦ÓÃ³ÌĞòµÄÑ¸ËÙ¸Ä±ä ÏÔÊ¾ Êı¾İ£»£©
+   4 Ö§³Ö×¢ÊÍ£º£¨ÔÚÍ¼ĞÎ Àï ÏÔÊ¾ zabbixÊÂ¼ş£» £©
+   5 ÏÔÊ¾È·ÈÏµÄÎÊÌâ£»
 
 --------
 ¼à¿Øµã£» 
@@ -47,7 +47,7 @@ Enterprise ÊµÀı¡·ÊÖ²áÖĞµÄ¡°ÅäÖÃ²¿Êğ¿Í»§¶Ë¡±
 ÕÒRoboµÄÄÇ¸öÎÊÌâ£»  ÒÑ¾­µÃµ½ Êı¾İ£» ²»ÖªµÀÈçºÎ¿´£¬CM - kafka agent-kafkaserver - pump - Bridge £»
 
 grafana £» ¼à¿ØÒµÎñÂß¼­ £»       --- 1£¬×Ô¶¯Ë¢ĞÂ£» 2 ÈçºÎ²é¿´¾ßÌåÏîÄ¿£¿ 3 ÈçºÎ×Ô¶¨ÒåÄ£°å£» 
-																	   4£¬ÊìÏ¤¼à¿ØÏµÍ³ £¬´ÓÊ²Ã´µØ·½¿´ÆğÄØ-- Òª¼à¿ØµÄÒ³ÃæÊÇÊ²Ã´£¿ ÎÊÎÊÌÆÌÆ £» 
+                                                      4£¬ÊìÏ¤¼à¿ØÏµÍ³ £¬´ÓÊ²Ã´µØ·½¿´ÆğÄØ-- Òª¼à¿ØµÄÒ³ÃæÊÇÊ²Ã´£¿ ÎÊÎÊÌÆÌÆ £» 
 zabbix £»¼à¿Ø»úÆ÷ĞÔÄÜ£¬·şÎñ½ø³Ì£¬
 
 --------
@@ -82,23 +82,10 @@ Started listening on tcp ports. Queues unblocked.
 
 
 well 
-	
-shengjun ¸øËûÃÇ½¨Ä¿Â¼£»ºÍ È¨ÏŞ£»  
-	
-°²±ó¿ÉÄÜĞèÒªÎÒÅäÖÃÈ¨ÏŞ£» ¼Ósudo £ºÎÊÌâ£±£ºÃÜÂëÔõÃ´°ì  £»ÖØ½¨sudo £¬ÎÊstrong £»
+   
 
-10.66.66.33  AZ-SPLUNK-INDEX01
-
-Debian DEB install
-To install the Splunk DEB package:
-
-dpkg -i splunk_package_name.deb
-Note: You can install the Splunk DEB package only in the default location, /opt/splunk.
-
-----------
-
-ÓÃ»§Ãû	È«Ãû	µç×ÓÓÊ¼şµØÖ·	Ê±Çø	Ä¬ÈÏÓ¦ÓÃ	ÖØĞÂÆô¶¯ºóÌ¨ÈÎÎñ
-admin	Administrator	changeme@example.com	None	launcher	1
+ÓÃ»§Ãû   È«Ãû   µç×ÓÓÊ¼şµØÖ·   Ê±Çø   Ä¬ÈÏÓ¦ÓÃ   ÖØĞÂÆô¶¯ºóÌ¨ÈÎÎñ
+admin   Administrator   changeme@example.com   None   launcher   1
 
 
 /opt/php/etc/php-fpm.conf
@@ -116,12 +103,6 @@ http://docs.splunk.com/Documentation/Splunk/6.3.1/Admin/Backupconfigurations
 http://docs.splunk.com/Documentation/Splunk/6.3.1/Indexer/Backupindexeddata
 
 
-ÆëÎ°£»
-display rule £»
-ÑÓ³Ù
-
-bridge -- insert QPS £» 
-
 ------------------------
 mactrounk   £» Á÷Á¿ºÍ¹ã¸æÎ» £¬ÓÉ°Ù¶È£¬ĞÂÀËÕâĞ© ·¢¸øÎÒÃÇ £¨10000¸öqps£¬¼´10000¸ö¹ã¸æÎ»£¬ ÔÊĞíÄãµÄ·´Ó¦Ê±¼ä 100ms£©
 
@@ -131,8 +112,8 @@ banking  -- ²é¿´¹ã¸æÖ÷ ÊÇ·ñÓĞÇ®£¬ÓĞÔòÍ¶·Å ¹ã¸æ£»  £¿ ÈçºÎÖªµÀ¹ã¸æÖ÷ÊÇ·ñÓĞÇ®ÄØ£¿
 robots --   ²é¿´ ¹ã¸æÎ» ¼Û¸ñÊÇ·ñºÏÀí£¬ ºÏÀí Ôò³ö¼Û£» 
 frequency -- £» ±ÈÈçÒÑ¾­¸øÕâ¸ö ÈËÍ¶·ÅÁË 2¸ö¹ã¸æ£¬Ôò±ÜÃâ ÔÙ¸øÕâ¸öÈËÍ¶·ÅµÚÈı´Î£»
 cookie-mapping -- £» ²é¿´Õâ¸öÈËÊÇ²»ÊÇÎÒÃÇµÄÓÃ»§£»
-	ĞÂÓÃ»§£¿ -- Ğ´Èëkafka £»  bridge »áÀ´È¡ Õâ¸öÊı¾İ½øĞĞ ÔÙ´¦Àí£» 
-	ÀÏÓÃ»§£¿ -- ÔòÅÅ³ı£»ºó ¼ÇÂ¼µ½ ¡¾£¿£¿£¿¡¿
+   ĞÂÓÃ»§£¿ -- Ğ´Èëkafka £»  bridge »áÀ´È¡ Õâ¸öÊı¾İ½øĞĞ ÔÙ´¦Àí£» 
+   ÀÏÓÃ»§£¿ -- ÔòÅÅ³ı£»ºó ¼ÇÂ¼µ½ ¡¾£¿£¿£¿¡¿
 render -- £»¹ã¸æäÖÈ¾£» Í¶·Å£»  ºÎÊ±£¿ÎÒÃÇ¾ÍÍ¶·Å Æ½Ì¨¹ã¸æ£»
 Tracking --- ¼ÆËã Í¶·Å ¹ã¸æµÄ×ÜÁ¿£¬¼ÆËãÓÃ»§µã»÷ µÄ ¹ã¸æÁ¿£»
 ¡¾£¿£¿£¿¡¿ -- £»  cookie ±¾ÉíÓĞÊ±¼äÏŞÖÆ£»ÎÒÃÇ¼ÇÂ¼ºó£¬ Èç¹û¹ıÁËÆÚ£¬Èç¹ûÔÙÓöµ½£¬ÔÚÆäËûµØ·½ÔÙÆ¥ÅäÎÒÃÇµÄÓÃ»§£»£¿£¿£¿   
@@ -149,8 +130,8 @@ Hi £¬Robo £¬
 
 
 ÒÑÖªµÄÁ÷³Ì£º 
-	cookieMapping Æ¥ÅäÓÃ»§£» ¼ì²âµ½ĞÂµÄÓÃ»§£¬½«ĞÂcookie¼ÇÂ¼ Ğ´Èëkafka £» 
-	bridge ½«Êı¾İ´Ó kafakaÈ¡³ö ½øĞĞÔÙ´¦Àí £»
+   cookieMapping Æ¥ÅäÓÃ»§£» ¼ì²âµ½ĞÂµÄÓÃ»§£¬½«ĞÂcookie¼ÇÂ¼ Ğ´Èëkafka £» 
+   bridge ½«Êı¾İ´Ó kafakaÈ¡³ö ½øĞĞÔÙ´¦Àí £»
 
 ĞèÒª¿¼ÂÇµÄÎÊÌâ£º
  ÎÒÃÇµ£ĞÄ cookieMappingµÄÊä³ö£¬ºÍbridgeµÄÊäÈë,ÖĞ¼ä¿ÉÄÜ»áÓĞ¶ªÊ§ÇëÇó¶ÓÁĞµÄÇé¿ö£»
@@ -163,14 +144,14 @@ bridge ´ÓkafkaÖĞ½ÓÊÜ µ½µÄ Êı¾İÁ¿£» Ç÷ÊÆÍ¼£¿
 
 
 ÊìÏ¤ ¼à¿Ø granfna £» 
-	ÎÒÃÇĞèÒª×¢ÒâÄÄĞ©¼à¿Ø £¬
-		ÄÄ¼¸Àà£¿ 
-		µÇÂ¼·½·¨£»
-		±à¼­·½·¨£»
-	ÈçºÎ±à¼­ÕâĞ©¼à¿Ø£»
-	
-	
-	
+   ÎÒÃÇĞèÒª×¢ÒâÄÄĞ©¼à¿Ø £¬
+      ÄÄ¼¸Àà£¿ 
+      µÇÂ¼·½·¨£»
+      ±à¼­·½·¨£»
+   ÈçºÎ±à¼­ÕâĞ©¼à¿Ø£»
+   
+   
+   
 ÎÒ¿´Õâ¸öÄ¿Â¼ÏÂÖ»ÓĞÈıÌìÄÚµÄÈÕÖ¾£» 
 $ ssh 10.66.66.91 "ls -lSh /data/tracking/statistic" |more
 total 13G
@@ -273,7 +254,7 @@ indexer  Èç¹û°²×°ÁËforwarder £»ÆÆ»µÁËÔ­°ü£¿ Ğ¶ÔØµô£¬¶øÇÒ°²×°Ä¿Â¼Ò²²»Í¬£¬ »á²»»áÓ
 
 
 ÀÏ°åÒªÈ«²¿µ¼Èë 13G 
-	
+   
 ------
 ÈçºÎÈÃÁìµ¼ ¿ìËÙ ÊìÏ¤Õâ¸ö¹ı³Ì£¿ ÖØµã£¬Ò»Ä¿ÁËÈ»£»·½±ã¿ìËÙÖ¸¶¨·½°¸£» 
 
@@ -306,8 +287,8 @@ Well
 Ò» Ê×ÏÈÒªÏÂÔØ°ü£»
   wget http://azure-cpic.chinacloudapp.cn:8080/nginx+php1.2-full.tar.gz
    
-	»òÕß·ÃÎÊ ÏÂÃæµÄweb¶¼¿ÉÒÔÏÂÔØ£» 
-	http://azure-cpic.chinacloudapp.cn:8080 
+   »òÕß·ÃÎÊ ÏÂÃæµÄweb¶¼¿ÉÒÔÏÂÔØ£» 
+   http://azure-cpic.chinacloudapp.cn:8080 
 
 ¶ş.¿ÉÄÜÅöµ½µÄÎÊÌâ £»
 1 ¿ªÊ¼°²×° £¬
@@ -350,17 +331,17 @@ $ sudo mkdir /opt/run/php-fpm/
 [vince@CPIC-DMP11 conf.d]$ sudo more /opt/run/nginx.pid 
 7676
 
-	reload)
+   reload)
 
-		echo -n "Reload service $NAME... "
+      echo -n "Reload service $NAME... "
 
-		if netstat -tnpl | grep -q nginx; then
-			/usr/bin/nginx -s reload
-			echo " done"
-		else
-			echo "$NAME is not running, can't reload."
-			exit 1
-		fi
+      if netstat -tnpl | grep -q nginx; then
+         /usr/bin/nginx -s reload
+         echo " done"
+      else
+         echo "$NAME is not running, can't reload."
+         exit 1
+      fi
 
 ---------------
 Ô¶³Ì Á¬½Ó »ú·¿£»  ÎŞ·¨Ìá¹©yum £¬ ¶ÔÓ¦°üÎŞ·¨°²×° 
@@ -377,3 +358,350 @@ sed -i 's:exclude=.*:exclude=:g' /etc/yum.conf > /dev/null 2>&1
 
 
       mv -f /etc/yum.conf.nginxphp /etc/yum.conf > /dev/null 2>&1
+      
+      
+      
+$ yum deplist gcc make
+
+
+
+
+patch make cmake gcc gcc-c++ gcc-g77 flex bison file libtool libtool-libs autoconf kernel-devel libjpeg libjpeg-devel libpng libpng-devel libpng10 libpng10-devel gd gd-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glib2 glib2-devel bzip2 bzip2-devel libevent libevent-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel vim-minimal nano fonts-chinese gettext gettext-devel ncurses-devel gmp-devel pspell-devel unzip libcap diffutils
+
+10.66.66.26
+
+## x86
+$ more rpm/depend1  |grep package  |grep -v i686 |wc -l
+59
+
+# ¾«È·£¬²»ÖØ¸´£» ÕâÀï²»ÖØ¸´µÄ»°£» ÉÏÃæµÄ³¤Êä³ö £¬¾«È·µ½ x86µÄ°ü£» 
+$  more rpm/depend1  |grep package  |grep -v i686 |awk '{print $2}' |uniq > rpm/depend2
+
+
+¼´Ê¹ ÒÀÀµĞÔ Ò²ÓĞ°æ±¾ÎÊÌâ --- ¹ıÂË³öÀ´ÒÔºó £¬awk ÔÙ ÅÅ³ı¶àÓàµÄ£» 
+  dependency: libc.so.6(GLIBC_2.4)(64bit)
+   provider: glibc.x86_64 2.12-1.166.el6
+   provider: glibc.x86_64 2.12-1.166.el6_7.1
+   provider: glibc.x86_64 2.12-1.166.el6_7.3
+
+centOSÉÏ ËÑ³öÀ´µÄ°üÎŞ·¨¶Ô±È rhel µÄ£¬Ãû×Ö²»Ò»Ñù £» 
+[vince@CPIC-DMP11 nginx+php1.2.3-full]$ more rpm/depend3 |egrep "(package|provider)" |grep -v i686 |awk '{print $2}' |uniq |sort |uniq |wc -l
+117
+
+--¼ò»¯Ãû×Ö £» 
+$ more rpm/depend3 |egrep "(package|provider)" |grep -v i686 |awk '{print $2}' |uniq |sort |uniq |awk -F ".x86" '{print $1}' > rpm/depend4
+
+-- ÁĞ³öÀ´ £¬ÔÙ¹ıÂËnorch £»
+$ more rpm/depend4  |awk -F "." '{print $1}' > rpm/depend5
+
+
+### »Øµ½RHEL  
+
+yum deplist gcc make  Õâ¸ö°üÓÃ²»ÉÏ£» 
+
+½Å±¾Ö´ĞĞÍêÁË£¬ phpÈ´ÎŞ·¨°²×°£» ¿Ï¶¨ÓĞÈ±Ê§ÎÄ¼ş ÁË
+
+ÓÃµÄÒ»¸ö¹Ø¼ü×Ö¾ÍÆ¥ÅäÁËÌ«¶àĞÅÏ¢ÁË£» 
+python-twisted-lore-8.2.0-3.2.el6.x86_64.rpm
+python-twisted-mail-8.2.0-3.2.el6.x86_64.rpm
+python-twisted-names-8.2.0-3.2.el6.x86_64.rpm
+python-twisted-news-8.2.0-3.2.el6.x86_64.rpm
+python-twisted-runner-8.2.0-3.2.el6.x86_64.rpm
+python-twisted-web-8.2.0-3.2.el6.x86_64.rpm
+python-twisted-words-8.2.0-3.2.el6.x86_64.rpm
+python-urlgrabber-3.9.1-8.el6.noarch.rpm
+
+
+
+Õâ¸öÎŞ·¨ÅÅ³ıÁË£» rpm £¬²»×¢²á»¹²é²»ÁËÒÀÀµĞÔÁËÎÒ´Î°Â£»£»
+
+ÈÃrhel ×¢²á centOS µÄyum £¬»¹ÓĞ¿ÉÄÜ½â¾ö£¬´Î°Â£» 
+
+
+
+
+more rpm/depend5  
+
+  353  more rpm/depend5 |egrep -v "(devel|libs)" > rpm/depend_no_devel_libs   È«µÄ £»Ê²Ã´×Ö·û¶¼ÓĞ £»-- grepµÄ»° -- Ò»¶Ñ×Ö¶Î-- Åª³öÀ´Ö»×°develºÍlibs£¿--²»³ÉÁ¢ -- got stuck £»
+  
+  354  more rpm/depend5 |egrep "(devel|libs)" > rpm/depend_devel_libs  Ö»ÓĞdevel µÄ°ü£¬ºÍ libs µÄ°ü£» 
+
+
+# df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/mapper/VolGroup-lv_root
+                       50G  1.7G   46G   4% /
+tmpfs                 1.9G     0  1.9G   0% /dev/shm
+/dev/xvda1            485M   32M  428M   7% /boot
+/dev/mapper/VolGroup-lv_home
+                      144G  188M  136G   1% /home
+/dev/xvdd1            3.5G  3.5G     0 100% /mnt/cdrom
+
+  µ«ÊÇÎÒÈç¹û°²×°   
+  
+# »¹ÊÇÂ©ÁËÁ½¸ö¹Ø¼üĞÔµÄ°ü£»µ¼ÖÂÎŞ·¨ ±àÒë£» 
+  glibc-headers-2.12-1.107.el6.x86_64.rpm
+  kernel-headers-2.6.32-358.el6.x86_64.rpm
+  
+-------
+57.56  £»
+
+
+172.22.56.21
+
+
+
+
+
+vince@TS-W01:/var/log$ 
+
+## Ã»ÓĞ¼ÓÈëlogrotate
+vince@TS-W01:/var/log$ ls -lSh  Mars/ |more
+total 36G
+-rw-r--r-- 1 www-data root  19G Dec 28 11:04 access.mars.log
+-rw-r----- 1 root     root  17G Dec 28 11:04 uwsgi.log
+
+## ÎÄ¼ş ÌØ±ğ´ó
+vince@TS-W01:/var/log$ sudo ls -lSh  zampdsp/*  |more
+-rwxr-xr-x 1 root     root  83G Sep 27 10:20 zampdsp/zampdsp.uwsgi
+
+## 
+
+Íæ´ó¼Ü¹¹£¬´óÆ½Ì¨£»±ØĞëĞÄË¼çÇÃÜ£» ½ô¼±µÄÊÂ¹ÌÈ»ÖØÒª£» ÖØÒªµÄÊÂ²ÅÊÇ¹Ø¼ü£¬·ñÔòÖ»ÊÇ²»Í£µÄ¾È»ğ¶øÒÑ£»
+
+Step 1 ÏÈ¼ÓÉÏÎÒµÄÕË»§ÔÙËµ£» 
+10.66.66.38 centos # account # no sudo £»
+10.66.66.37        # no account # 
+
+
+## Todolist £»
+
+
+
+19800 
+¼ÓÓ²½â
+/etc/salt/minion
+{master: 172.22.40.251
+id: FW8PKY1}
+master: 172.22.40.251
+id: 1084-1595-0058-6840-0592-2688-96
+
+
+  slave»úÆ÷£º
+          sudo apt-get install salt-minion
+          ±à¼­/etc/salt/minionÎÄ¼ş£º
+          master: 172.16.43.131£¨master»úÆ÷ip£©
+          id: max3 £¨»úÆ÷´úºÅ£©                                    ###############Õâ¸ö»úÆ÷´úºÅÊÇËæ±ãÆğÂğ£¿¡¡¸ù¾İÊ²Ã´ÄØ£¿¡¡
+          ÖØÆô salt-minion   
+  slave»úÆ÷£º
+          sudo apt-get install salt-minion
+          ±à¼­/etc/salt/minionÎÄ¼ş£º
+          master: 172.16.43.131£¨master»úÆ÷ip£©
+          id: max3 £¨»úÆ÷´úºÅ£©                                    ###############Õâ¸ö»úÆ÷´úºÅÊÇËæ±ãÆğÂğ£¿¡¡¸ù¾İÊ²Ã´ÄØ£¿¡¡
+          ÖØÆô salt-minion   
+
+
+
+log_format main '$remote_addr - $remote_user [$time_local] '
+                     'fwf[$http_x_forwarded_for] tip[$http_true_client_ip] '
+                     '$upstream_addr $upstream_response_time $request_time '
+                     '$geoip_country_code '
+                     '$http_host $request '
+                     '"$status" $body_bytes_sent "$http_referer" '
+                     '"$http_accept_language" "$http_user_agent" ';
+                     
+remote_addr remote_user       time_local         forward  client  upstream_addr             http_host     request                      status
+201.158.69.116 - - [03/Jan/2013:21:17:20 -0600] fwf[-] tip[-] 127.0.0.1:9000 0.007 0.007 MX pythontab.com GET /html/test.html HTTP/1.1 "200" 2426 "http://a.com" "es-ES,es;q=0.8" "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11"
+187.171.69.177 - - [03/Jan/2013:21:17:20 -0600] fwf[-] tip[-] 127.0.0.1:9000 0.006 0.006 MX pythontab.com GET /html/test2.html HTTP/1.1 "200" 2426 "http://a.com" "es-ES,es;q=0.8" "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11"
+
+
+-----------------------------
+ÓÃ»§Ãûff£¬ÃÜÂë£ºRedhat1!
+IP:vpn.jiwei.me
+pptpĞ­ÒéµÄ
+
+
+
+Hi ÔÚ ubuntuÉÏÈçºÎÅäÖÃsalt client £¿ 10.66.66.37
+
+ÎÒÖ´ĞĞÁËÎÄµµÉÏµÄ²Ù×÷£¬»¹ÊÇÎŞ·¨Ô¶³ÌÌí¼Ó×Ô¼ºµÄÕË»§ £¡
+
+ slave»úÆ÷£º
+          sudo apt-get install salt-minion
+          ±à¼­/etc/salt/minionÎÄ¼ş£º
+          master: 172.16.43.131£¨master»úÆ÷ip£©
+          id: max3 £¨»úÆ÷´úºÅ£©
+          ÖØÆô salt-minion
+          
+          
+Hi£¬Äã°ïÎÒÔ­À´Ìí¼ÓµÄÄÇÌ¨salt client £»£»
+10.66.66.38   salt   [vince@CPIC-DMP22 ~]$ sudo ps -ef 
+[sudo] password for vince: 
+vince is not in the sudoers file.  This incident will be reported.
+[vince@CPIC-DMP22 ~]$ 
+[vince@CPIC-DMP22 ~]$ 
+[vince@CPIC-DMP22 ~]$ id vince
+uid=502(vince) gid=502(vince) groups=502(vince),10(wheel)
+
+
+salt -G "ipv4:10.66.66.37"  cmd.run "w"
+
+
+
+10.66.66.38   centOS   no sudo 
+vince is not in the sudoers file.  This incident will be reported.
+
+$ id vince
+uid=502(vince) gid=502(vince) groups=502(vince),10(wheel)
+
+
+»¹ÓĞÎÒÔÚÒ»Ğ©»úÆ÷ÉÏÃ»ÓĞsudo È¨ÏŞ£¡ 10.66.66.38  £» 
+vince is not in the sudoers file.  This incident will be reported.
+[vince@CPIC-DMP22 ~]$ id vince
+uid=502(vince) gid=502(vince) groups=502(vince),10(wheel)
+
+
+## 
+Add zabbix agent ;
+
+-- open 10050 ;10051 tcp & udp ;
+-A INPUT -s 192.168.21.127 -m state --state NEW -m tcp -p tcp --dport 10050:10051 -j ACCEPT
+-A INPUT -s 192.168.21.127 -m state --state NEW -m udp -p udp --dport 10050:10051 -j ACCEPT
+
+
+
+
+###########Important;
+Add email on my iphone ; 
+salt permision issue ; 
+Read python book ; liao ? & find the useful modules ; 
+
+
+
+## Ubuntu 
+# dpkg -l |grep zabbix
+ii  zabbix-agent                      1:1.8.11-1                                  network monitoring solution - agent
+
+### include 
+/usr
+/usr/bin
+/usr/bin/zabbix_agent
+/usr/bin/zabbix_sender
+/usr/share
+/usr/share/doc
+/usr/share/doc/zabbix-agent
+/usr/share/doc/zabbix-agent/copyright
+/usr/share/doc/zabbix-agent/README.Debian
+/usr/share/doc/zabbix-agent/changelog.Debian.gz
+/usr/share/man
+/usr/share/man/man1
+/usr/share/man/man1/zabbix_sender.1.gz
+/usr/share/man/man8
+/usr/share/man/man8/zabbix_agentd.8.gz
+/usr/share/zabbix-agent
+/usr/share/zabbix-agent/zabbix_agentd.conf
+/usr/sbin
+/usr/sbin/zabbix_agentd
+/var
+/var/log
+/var/log/zabbix-agent
+/etc
+/etc/init.d
+/etc/init.d/zabbix-agent
+/etc/logrotate.d
+/etc/logrotate.d/zabbix-agent
+/etc/zabbix
+/etc/zabbix/zabbix_agentd.conf.d
+
+### main conf 
+# more /etc/zabbix/zabbix_agentd.conf
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix-agent/zabbix_agentd.log
+LogFileSize=0
+DebugLevel=1
+DisableActive=1
+Server=172.22.40.250
+StartAgents=5
+Timeout=30
+Include=/etc/zabbix/zabbix_agentd.conf.d/
+
+## monitor item ;  confined by US ; 
+root@TS-OP03:~# cd /etc/zabbix/zabbix_agentd.conf.d/
+root@TS-OP03:/etc/zabbix/zabbix_agentd.conf.d# ls
+core_file_created.conf  os.basic.conf
+
+root@TS-OP03:/etc/zabbix/zabbix_agentd.conf.d# more core_file_created.conf 
+UserParameter=corefile[*],         bash /home/zabbix/agent_bin/check_core_created.sh $1 $2
+
+root@TS-OP03:/etc/zabbix/zabbix_agentd.conf.d# more os.basic.conf 
+#agent
+UserParameter=agentd_conf.version,/usr/bin/md5sum /etc/zabbix/zabbix_agentd.conf | awk '{print $1}'  
+UserParameter=getserver.info,/bin/sh /etc/zabbix/scripts/serverinfo
+UserParameter=tcp.conn[*],/bin/sh /etc/zabbix/scripts/tcpconnection $1
+UserParameter=asset.info[*],/bin/sh /etc/zabbix/scripts/assetinfo $1
+UserParameter=ipvs.info[*],/bin/sh /etc/zabbix/scripts/ipvs $1
+UserParameter=sys.load[*],/bin/sh /etc/zabbix/scripts/loadaverage.sh $1
+UserParameter=disk.used,/bin/df | sed 1d | awk '{print $(NF-1)}' | awk -F% '{print $1}' | sort -n | tail -n 1
+
+### Returning to CentOS 
+
+Installing:
+ zabbix-agent                                x86_64                                1.8.22-1.el6                                epel                                131 k
+Installing for dependencies:
+ zabbix                                      x86_64                                1.8.22-1.el6                                epel                                 93 k
+
+##
+$ rpm -ql zabbix-agent
+/etc/init.d/zabbix-agent
+/etc/logrotate.d/zabbix-agent
+/etc/zabbix/zabbix_agent.conf
+/etc/zabbix/zabbix_agentd.conf
+/etc/zabbix/zabbix_snmptrap.conf
+/usr/bin/zabbix_sender
+/usr/bin/zabbix_snmptrap
+/usr/sbin/zabbix_agent
+/usr/sbin/zabbix_agentd
+/usr/share/doc/zabbix-agent-1.8.22
+/usr/share/doc/zabbix-agent-1.8.22/zabbix_snmptrap.README
+/usr/share/man/man1/zabbix_sender.1.gz
+/usr/share/man/man8/zabbix_agentd.8.gz
+
+## Change client 's config ; 
+# more /etc/zabbix/zabbix_agentd.conf |grep -v "#" |sed -e "/^$/d"
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix/zabbix_agentd.log
+LogFileSize=0
+Server=172.22.40.250
+
+# /etc/init.d/zabbix-agent start
+Starting Zabbix agent:                                     [  OK  ]
+
+## Back to the zabbix server ## means it's succeed ;
+# /usr/bin/zabbix_get -s 10.66.66.23 -p10050 -k"net.if.in[eth0,bytes]"
+3158748324131
+
+## ÎÒÃÇµÄhost ÊÇÍ¨¹ıweb µã»÷£¿  via CLI £¿ 
+## ÏÂÃæµÄ·şÎñÆ÷ Ê²Ã´¶¼ÓĞÁË£¬½ø³Ì Õı³£ £¬ÅäÖÃÕı³££»¿ÉÊÇzabbix server»¹ÊÇÎŞ·¨ ½øĞĞ ¼àÊÓ£»
+root@AZ-Splunk:~# dpkg -L zamplus-zabbix-agent  
+
+## OP03 ÉÏÓĞ¼à¿ØÏîÄ¿ £¡ ²é²éOP03 µÄ Ä£°å£»
+Host name£ºTS-OP03_172.22.40.251
+In group:  Zamplus_Templates ;                     ## check group ? just a host group with 19 hosts ! with same usage; we have a Azure_host 
+IP :172.22.40.251  ;  Port:10050 
+By Proxy : no 
+Status : Monitored 
+---------------Templates                           ## check those templates ; 
+Templates :
+	3.0_core_create_time  -- 2 Items ;2 Triggers ;   ## ²»Àí½âÄØ£»
+		--core_create_time [disable]  
+		--core_file_create
+	3.0_MZ_Template_Ubuntu -- 12 application £»34 items £»Triggers £»Graphs 
+	3.0_Port_80
+---------------IPMI ? --Default-- Users 
+---------------Macro [] - Value []
+---------------History []
+
+
+### An exsit host group for azure ; 
+Azure_Host	Templates (0)
+Hosts (10)	AZ-trk01_10.66.66.90, AZ-trk02_10.66.66.91, AZ-NGX01_10.66.66.86, AZ-NGX02_10.66.66.87, AZ-CM01_10.66.66.88, AZ-CM02_10.66.66.89, AZ-NGX03_10.66.66.92, AZ-NGX04_10.66.66.93, Azure-DaNgx01_10.66.66.27, Azure-DaNgx02_10.66.66.28
