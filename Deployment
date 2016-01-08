@@ -1,8 +1,8 @@
 #### Setup my account， seems like Under my acount it also can runs； 
 vince@TS-OP03:~$ sudo salt -G "ipv4:10.66.66.90" state.sls users.vince
 
-sudo salt -G "ipv4:10.66.66.36" state.sls users.vince
-sudo salt -G "ipv4:10.66.66.21" state.sls users.jerry
+sudo salt -G "ipv4:10.66.66.45" state.sls users.vince
+sudo salt -G "ipv4:10.66.66.46" state.sls users.jerry
 sudo salt -G "ipv4:221.228.208.56" state.sls users.wangkai
 
 
@@ -54,7 +54,6 @@ bind9 reload
 RPM factory :192.168.1.201 
 
 
-
 # CASE 1 ; Edit json to here ;  大表推送，新增配置文件； 
 /usr/src/zamplus-src/zamplus-data-update-server-v3/zamplus-data-update-server-v3/usr/local/data-update-server/distribute/release_robots
 Took place the following keywords;
@@ -93,10 +92,16 @@ click “Sync Package” ;
 
 ###### The service we can bounce in page 
 megatron ;
+##After bouncing the service ,need to check the port ; 
+netstat -an |awk '{print $4}' |grep 19800 
+
 Robots ;
 zamplus-billing-server
 ###### Need to bounce at server; 
-date-update ; [has 2 processed ; so we need to kill TWICE;]
+######date-update ; [has 2 processed ; so we need to kill TWICE;]
+ps -ef |grep "/usr/local/data-update-server/bin" |grep -v grep |grep -v task |awk '{print $2}' |while read lines;do kill -9 $lines;done
+## check again
+ps -ef |grep "/usr/local/data-update-server/bin" |grep -v grep |grep -v task 
 
 
 ----------------------Deployments on Robots servers ;
@@ -144,6 +149,44 @@ Pwd:AdaG(sVa4A3
 ### Run it as sudo ? yeah ,I think . 
 fab -f init_azure.py  init_salt
 }
+
+
+-------------------------------------------------------清理素材
+under root
+172.22.56.7
+supervisorctl stop merchant_task merchant_task_monitor merchant_task_schd
+ps -ef | grep merchant_task ## almost not stop ， using the following ways；
+ps -ef |grep merchant_task |grep -v grep |awk '{print $2}' |xargs kill -9 
+ps -ef |grep merchant_task
+
+172.22.57.33
+supervisorctl stop merchant_task
+ps -ef | grep merchant_task 
+
+2.
+172.22.56.7
+redis-cli
+flushall
+
+3.start
+172.22.56.7
+supervisorctl start merchant_task merchant_task_monitor merchant_task_schd
+
+# supervisorctl status |tail -n 3 ### 验证启动即可；
+merchant_task                    RUNNING   pid 31687, uptime 0:01:30
+merchant_task_monitor            RUNNING   pid 31694, uptime 0:01:28
+merchant_task_schd               RUNNING   pid 31753, uptime 0:01:27
+
+172.22.57.33
+supervisorctl start merchant_task
+------------------------------
+CenOS 初始化 init-----------------------------
+[root@CPIC-DMP01 init_centos]#  pwd
+/root/init_centos
+[root@CPIC-DMP01 init_centos]# ls
+epel-release-6-8.noarch.rpm  init_centos.sh  jdk-7u79-linux-x64.gz  rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
+------------------------------
+
 
 PostThinging . 
 	像在K机器呢！ 把我们的服务器 配置，环境变量 自动 弄入新服务器：

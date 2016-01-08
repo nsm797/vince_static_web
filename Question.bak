@@ -125,9 +125,25 @@ Zampda3_UC
 ----------------------
 
 Updated python per OPTSERVICE-4443； 
-Updated robots per OPTSERVICE-4444；
+Updated robots per OPTSERVICE-4444；OPTSERVICE-4453
 Added nginx proxy config per OPTSERVICE-4448	，OPTSERVICE-4447
-Updated Megatron per jira OPTSERVICE-4445 ；
+Updated Megatron per jira OPTSERVICE-4445，OPTSERVICE-4480，OPTSERVICE-4479
 检查磁盘空间问题，扩展逻辑转，清理多余日志；将漏掉的log补充到logrotate；
 检查splunk测试错误，根限制问题，流量限制问题，更改测试方案；
+
+
+----------------------
+熟悉ansible配置，rpm-build配置，zabbix配置； 
+配置Neon Cluster部分服务器 的ansible功能，saltstack key没添加成功问题； zabbix配置处理问题；
+
+聚效（MAX_MOB）rtb 域名上线 Jira OPTSERVICE-4508.
+Megatron上线，
+	OPTSERVICE-4512 
+	OPTSERVICE-4526 
+	OPTSERVICE-4543
+Goodman，data-update上线，OPTSERVICE-4513 
+Zampda3.0 FE 上线； OPTSERVICE-4524 
+zamplus_report 上线 OPTSERVICE-4555
+
+------------------------
 

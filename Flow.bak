@@ -1,0 +1,173 @@
+apt-get install zamplus-megatron-server=3.0.12.85
+
+yum install redhat-lsb.x86_64
+
+启动脚本 我倒是 不用 担心； 
+------------------zabbix key
+http://ju.outofmemory.cn/entry/76305 
+------------------查案文档；
+http://wiki.dev.zamplus.com/display/OPTeam/OPTeam+Home
+
+-------------关键词：拓扑
+拓扑图：
+http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=103547929
+zampda3.0 相关机器及服务安装信息
+http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=13764728
+
+## Jira里有个 tag功能 ； 为什么不用呢这帮人；
+
+-----------竟然有个命令无法执行； 
+# ansible -i /home/vince/hosts vince -m command -a "/usr/bin/nc -n -v 172.22.25.7 10051"
+10.66.66.17 | FAILED | rc=2 >>
+[Errno 2] No such file or directory
+
+# ansible -i /home/vince/hosts vince -m shell -a "/usr/bin/nc -n -v 172.22.25.7 10051"
+10.66.66.19 | FAILED | rc=127 >>
+/bin/sh: /usr/bin/nc: No such file or directory
+
+策略上，路由没关系 ； 
+
+
+sdc make LVM 
+挂在到 目录 ；
+zampbeat ；
+杨敏 ；
+
+10.66.66.46 
+/dev/mapper/vgspace01-pv01_ext 1006G   72M  955G   1% /opt/pv01
+
+HPFS/NTFS/exFAT
+
+
+# lvdisplay 
+  --- Logical volume ---
+  LV Name                /dev/vgspace01/pv01_ext
+  VG Name                vgspace01
+  LV UUID                pYLhNp-MKwe-sOQE-weYg-aV9P-HmiV-j3zqXL
+  LV Write Access        read/write
+  LV Status              available
+  # open                 0
+  LV Size                1022.00 GiB
+  Current LE             261632
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           252:0
+  
+  
+/dev/vgspace01/pv01_ext  /opt/pv01  ext4  defaults  0 0
+
+三个基础dm 大组：
+	BY-ZABBIXPROXY1
+	MCSFT-OPM
+	TS-ZAMPDAFE
+
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix-agent/zabbix_agentd.log
+LogFileSize=0
+DebugLevel=3
+DisableActive=1
+StartAgents=5
+Timeout=30
+Hostname=AZ-TRK01
+Server=10.66.66.10,172.22.40.250
+Include=/etc/zabbix/zabbix_agentd.conf.d/
+
+Azure_Neon_Cluster
+
+
+cpu user % > 90%
+
+
+哪里出了错误呢
+
+其他服务器没有更改，反而显示正常； 
+	删除了所有的配置文件；
+	昨天的邮箱：状态，爆出了
+	我在16上都做过什么？ 添加过N个网关，
+猜测：
+	1 获取不到数据
+	
+PROBLEM:CPIC-DMP01_10.66.66.15
+CPU% used 80% on CPIC-DMP01_10.66.66.15,now idle 5.757094%
+
+HOST CPIC-DMP01_10.66.66.15 is down > 10 min
+
+
+邮件爆出来的服务器 ，这几台都down 了；
+15
+16
+17
+18
+
+
+综合一下的话，我昨天应该是添加成功了
+
+邮件不报警；(⊙o⊙)… 怎么办，自己就变红了
+
+果然改错了，不知道是那根筋不对； 
+
+等待10分钟，检查是否有问题吧； 日了狗了，还是有问题呢！  
+
+又更改了一些配置 ；其他服务器会从红色变回来，我删完配置再加没有意义；
+
+finally --- Gee ； 果然还是配置哪里有问题； 
+
+
+cpu user % > 90%  这是什么鬼？ 
+
+
+Neon_Kafka_proc_port9092  ## Neon_Kafka_proc_port9092
+
+Kafka_proc_port9092
+10.66.66.21
+10.66.66.22
+10.66.66.23
+
+hadoop-10.X_Zookeeper 2181 ## Neon_hadoop_Zookeeper2181
+10.66.66.24
+10.66.66.25
+10.66.66.26
+
+hadoop-HELIUM_HBase60000 / HDFS 8020 ## Neon_hadoop_HBase60000  Neon_hadoop_Namenode8020
+10.66.66.24
+10.66.66.25
+
+hbase 60020  HDFS 50010  Yarn 8041  ## Neon_hadoop_HBase60020[change] Neon_hadoop_DataNode50010  Neon_hadoop_NodeManager8041
+10.66.66.15
+10.66.66.16
+10.66.66.17
+10.66.66.18
+10.66.66.19
+
+10.66.66.21
+10.66.66.22
+10.66.66.23
+
+Yarn 8088  ## Neon_hadoop_ResourceManager8088  
+10.66.66.25
+
+Mysql 3306 / HiveMetaStore 9083 /Storm 8080 /Geode 10123 ## Neon_hadoop_mysql_port_3306   Neon_hadoop_hive-meta-store_port9083[change]  Neon_hadoop_Storm8080[change]  Neon_hadoop_GeodeLocator10123
+10.66.66.26
+
+Geode 40123  #  Neon_hadoop_GeodeServer40123
+10.66.66.32
+10.66.66.39
+10.66.66.40
+10.66.66.41
+10.66.66.42
+10.66.66.43
+10.66.66.44
+10.66.66.45
+
+
+### 这些template 观察一下，如果通用的话，尽量不要做重复操作； 
+
+
+“tcp”
+
+### shell里看见一个超级风骚的语法； 
+#echo y|mkfs.ext4 /dev/sdc
+
+#mount /dev/sdc /opt/amos

@@ -1,4 +1,5 @@
-Account: vince   					document   zabbix  
+Account: vince   					document   
+zabbix ；vince vince  
 Email : vincent@zamplus.com  email		
 Jira & Confluence: vincent-nan              
 PD you should be one ? all in one ?  in your first company ,than you always did. 
@@ -17,15 +18,20 @@ DB: 172.22.32.0/21 DB
 Control: 172.22.40.0/21 
 
 NGINX AGENT :
+## 小平台；囧 
+http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=13764728
 221.228.208.46/172.22.57.24
 221.228.208.47/172.22.57.25
+221.228.208.59/172.22.57.78
 Add proxy in here ;/etc/nginx/sites-enabled
 
+## 大平台；
+221.228.208.16
 Disk usage problem： Bony and JiangBing take charge of these hadoop servers . you need to take care others ; 
-172.22.5.x
-172.22.6.x
-172.22.16.x
-172.22.10.x
+172.22.5.x    hadoop 
+172.22.6.x    hadoop HA ? 
+172.22.16.x   zookeeper
+172.22.10.x   hadoop
 172.22.49.x   
 
 
@@ -122,5 +128,10 @@ salt-minion-2015.5.5-1.el6.noarch
 然后再 修改 什么配置 文件来着？ 
 
 连接过去，只在外网；
+
+【先把手头的工作做好 做精，再考虑那些 重要的 事吧。小流不行，就垮了】
+【要做的事情，铭记在心，记录在册，总要挖时间做的；】
+
+
 
 -------------

@@ -132,3 +132,20 @@ Updated Megatron per jira OPTSERVICE-4445，OPTSERVICE-4480，OPTSERVICE-4479
 检查splunk测试错误，根限制问题，流量限制问题，更改测试方案；
 
 
+----------------------
+熟悉ansible配置，rpm-build配置，zabbix配置； 
+配置Neon Cluster部分服务器 的ansible功能，saltstack key没添加成功问题；
+在Azure hadoop cluster部署Zabbix基础监控 OPTSERVICE-4491；
+初始化 ip:10.66.66.53-10.66.66.55  的centOS 环境；mount disk；
+ 
+聚效（MAX_MOB）rtb 域名上线 Jira OPTSERVICE-4508.
+Megatron上线，
+	OPTSERVICE-4512 
+	OPTSERVICE-4526 
+	OPTSERVICE-4543
+Goodman，data-update上线，OPTSERVICE-4513 
+Zampda3.0 FE 上线； OPTSERVICE-4524 
+zamplus_report 上线 OPTSERVICE-4555
+
+------------------------
+

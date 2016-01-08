@@ -705,3 +705,239 @@ Templates :
 ### An exsit host group for azure ; 
 Azure_Host	Templates (0)
 Hosts (10)	AZ-trk01_10.66.66.90, AZ-trk02_10.66.66.91, AZ-NGX01_10.66.66.86, AZ-NGX02_10.66.66.87, AZ-CM01_10.66.66.88, AZ-CM02_10.66.66.89, AZ-NGX03_10.66.66.92, AZ-NGX04_10.66.66.93, Azure-DaNgx01_10.66.66.27, Azure-DaNgx02_10.66.66.28
+
+当默认监控无法满足 实际 要求 ； 我们借助 shell / python 脚本；
+[root@monitor scripts]# catcheckservices.sh
+
+2、在Zabbix_agentd.conf里面添加UserParameter，格式如下，对于Zabbix来说，脚本其实就是一个插件。
+	1. UserParameter=checkservices.sh[*],/etc/zabbix/scripts/checkservices.sh $1 $2 
+
+zabbix_get -s 10.66.66.23 -k checkservice.sh[EST_80]   ## 参数 是这么用的 ；
+
+### 要 监控 的服务器 有多台 的时候，最简单的 方法 就是 先编写 一个【模板】templates； 在Link到要监控 的服务器上； 
+### 给 【模板】 添加  【Items】（监控项）	
+		--Name： HTTP_EST_NUM
+		--Type： Zabbix_agent 
+		--Key: 关键： checkservers.sh[EST_80]
+### 为 【模板】 添加 【触发器】
+		--Name： 			{HOST.NAME} HTTP 连接数 大于 20 
+		--Expression: {Linux_service_templates:checkservices.sh[EST_80].prev(0)}>2000
+		--Multiple {}
+		--Description:{HOST.NAME}HTTP 连接数大于 2000 
+		--URL {}
+		--Severity ：High
+		--Enabled {对号}
+
+### 配置 【Graph】；实时查看http的链接情况；  一个【Graph】里面 可以添加 多个Item数据；
+		-- 在http_connect_number （以后的吗?）里面 add
+### 要查看 【Graphs】 在要 监控 的主机 上Link 刚才的模板 Linux_service_templates ; 
+		-- 点击 template 然后add 吗？ 
+
+### 回到我们的环境： 
+### 【application】 -- 对应 【多个items】 【Triggers】
+
+【template】 【application】 【Items】 【Triggers】 【Graphs】 【Screens】 【Discovery】 【Linked to】-（hosts）
+
+###我要加的话：
+-- host group ？ 
+-- add template ，
+-- 堆application ；
+-- 堆item  ； 
+-- 堆Trigger？ 
+-- 
+
+## 直接堆进 已有的template 的话？ 
+-- 屡屡 以后的template 服务吗？ 
+
+
+### WOW ；这个怎么办呢？  步骤有点乱 ；
+--- 如果我先装 zabbix-agent ； 后期修改怎么办？
+--- 我修改好了，重编rpm包？ --- 800 年后吧；
+--- 发现ansible 工具，想花时间研究研究呢； 
+
+{HADOOP-10.X-Ubuntu:agent.ping.nodata({$TRG_AGENT_PING_TIMEOUT})}=1
+
+
+BH-172.22.5.127
+In groups :
+	hadoopNEW 
+		TS-DN-050_172.22.5.50,  ## 服务器命名 很规范 呢； 但是貌似hostGroup没什么用呢； 
+	HADOOP-10.X
+		
+
+In templates :                      ### 一个Datanode 继承了 3 个；
+	HADOOP_port_1006
+	HADOOP_port_proc_8042
+	HADOOP_Template_Ubuntu
+
+
+Template: HADOOP_Template_Ubuntu
+
+HADOOP_Template_NeonCluster
+
+Key：MEMused_percent
+Formula： 100*last("memory_used")/last("vm.memory.size[total]")
+
+### memory_used 
+Key:memory_used    [select]
+Formula : last("vm.memory.size[total]")-last("vm.memory.size[free]")-last("vm.memory.size[buffers]")-last("vm.memory.size[cached]")-last("vm.memory.size[shared]")
+
+
+
+
+
+体检报销的问题； 
+
+
+1 确保配置文件 全部更改；
+ssh 10.66.66.32 'echo -e "master: 172.22.40.251\nid: `hostname`" > /etc/salt/minion'
+
+2 确保salt-minion全部启动；
+
+4 确保key全部添加 
+
+5 验证非常慢啊，耐心；   循环竟然还丢了 ；
+
+!id vince &&
+倒叙；
+do !ssh $i "id vince";salt add account ；
+
+
+## well 其实这些 ，账户还是一定要加的；账户不通- salt就没有配好。 
+
+10.66.66.36 salt 问题解决 ，root无密码登录还是不行；  用ansible来测试 ；
+
+---
+有了账户；  
+1. 批量 装zabbix包；  zabbix-agent
+2. ansible 批量 建立目录；
+		/etc/zabbix/zabbix_agentd.conf
+			Hostname=TS-HELIUM-001
+			Server=172.22.25.7,172.22.40.250
+			Include=/etc/zabbix/zabbix_agentd.conf.d/
+3；ansible  copy文件模板；
+
+4；zabbix 端 添加基本监控； zabbix测试命令；
+
+
+
+## 包需要更新；
+#ansible all -m yum -a "name=lzrz state=latest" -u root 
+
+
+## 配置得更改；把脚本copy到所有服务器吗？ 
+$ dpkg -L zamplus-zabbix-agent |grep etc 
+$ more /etc/zabbix/zabbix_agentd.conf
+
+
+## 是否可以在白云山上建一个proxy ； 也可以这次加过后 ，在加入配置里面；
+
+## 目录得建立；
+/etc/zabbix/zabbix_agentd.conf.d/ 
+
+## 是否可兼容? 
+$ ls /etc/zabbix/zabbix_agentd.conf.d/
+core_file_created.conf  data_update_stat.conf  iostat.conf  os.basic.conf
+
+## zabbix服务得启动； 
+
+### 以上全是没有编译 RPM 的弊端； 一步步来； 
+### 目标： 编译一个rpm解决上面所有问题； 建包，启动服务即可； 然后在web端添加； 
+
+
+
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix-agent/zabbix_agentd.log
+LogFileSize=0
+DebugLevel=1
+DisableActive=1
+StartAgents=5
+Timeout=30
+Hostname=`hostname`
+Server=172.22.40.250
+Include=/etc/zabbix/zabbix_agentd.conf.d/
+
+
+更简单方法；用已定义的模块来做 ；
+$ ansible all -m authorized_key -a "user=mike key='{{ lookup('file', '/home/mike/.ssh/id_rsa.pub') }}' path=/home/mike/.ssh/authorized_keys manage_dir=no" --ask-pass -c paramiko
+
+销毁脚本
+ansible all -m file -a "dest=/tmp/id_rsa.pub state=absent" -u root ;
+
+## 万一copy过去的脚本有错， 得不偿失； 还是全在一起编译一个rpm后再 传给所有 ； 挑战 ；
+---------------
+
+    
+##########
+
+
+
+# nc -n -v 172.22.25.7 10051
+nc: connect to 172.22.25.7 port 10051 (tcp) failed: Connection timed out
+
+加管理员组 ； 
+再加 hadoop 的proxy 
+
+最后再加host ； 
+
+ln -s /usr/local/fe/files/template_preview /usr/local/fe/files/template_file/template_preview
+
+ 
+netstat -an |awk '{print $4}' |grep 19800 
+
+$ cat mega_baidu 
+172.22.56.21
+172.22.57.26
+172.22.57.27
+172.22.57.28
+172.22.57.73
+172.22.48.11
+172.22.57.74
+172.22.57.75
+
+$ more mega_tanx 
+172.22.56.1
+172.22.57.22
+172.22.57.23
+172.22.57.40
+
+172.22.57.48
+172.22.48.9
+172.22.57.55
+
+172.22.57.71
+172.22.57.62
+172.22.57.61
+
+cat mega_sina 
+172.22.57.24
+172.22.57.25
+172.22.57.58
+172.22.57.71
+
+
+
+
+Zabbix server IP: 192.168.101.11
+Zabbix proxy server: 192.168.102.109
+Zabbix agent: 172.1.16.2 (outside network but pingable from 102.109)
+
+
+
+10.66.66.22 | success | rc=0 >>
+12444
+
+10.66.66.21 | success | rc=0 >>
+14956
+
+监控赶紧加上；
+
+
+   43  more  /proc/sys/net/ipv4/tcp_max_tw_buckets
+   44  echo 10000 > /proc/sys/net/ipv4/tcp_max_tw_buckets
+   45  sysctl -p |grep tcp_max_tw_buckets
+   
+   
+   60  echo 20000 > /proc/sys/net/ipv4/tcp_max_tw_buckets
+   
+   
