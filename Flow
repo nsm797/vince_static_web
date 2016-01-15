@@ -19,157 +19,162 @@ http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=13764728
 -----------竟然有个命令无法执行； 
 # ansible -i /home/vince/hosts vince -m command -a "/usr/bin/nc -n -v 172.22.25.7 10051"
 10.66.66.17 | FAILED | rc=2 >>
-[Errno 2] No such file or directory
+
 
 # ansible -i /home/vince/hosts vince -m shell -a "/usr/bin/nc -n -v 172.22.25.7 10051"
 10.66.66.19 | FAILED | rc=127 >>
 /bin/sh: /usr/bin/nc: No such file or directory
 
-策略上，路由没关系 ； 
-
-
-sdc make LVM 
-挂在到 目录 ；
-zampbeat ；
-杨敏 ；
-
-10.66.66.46 
-/dev/mapper/vgspace01-pv01_ext 1006G   72M  955G   1% /opt/pv01
-
-HPFS/NTFS/exFAT
-
-
-# lvdisplay 
-  --- Logical volume ---
-  LV Name                /dev/vgspace01/pv01_ext
-  VG Name                vgspace01
-  LV UUID                pYLhNp-MKwe-sOQE-weYg-aV9P-HmiV-j3zqXL
-  LV Write Access        read/write
-  LV Status              available
-  # open                 0
-  LV Size                1022.00 GiB
-  Current LE             261632
-  Segments               1
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           252:0
-  
-  
-/dev/vgspace01/pv01_ext  /opt/pv01  ext4  defaults  0 0
-
-三个基础dm 大组：
-	BY-ZABBIXPROXY1
-	MCSFT-OPM
-	TS-ZAMPDAFE
-
-PidFile=/var/run/zabbix/zabbix_agentd.pid
-LogFile=/var/log/zabbix-agent/zabbix_agentd.log
-LogFileSize=0
-DebugLevel=3
-DisableActive=1
-StartAgents=5
-Timeout=30
-Hostname=AZ-TRK01
-Server=10.66.66.10,172.22.40.250
-Include=/etc/zabbix/zabbix_agentd.conf.d/
-
-Azure_Neon_Cluster
-
-
-cpu user % > 90%
-
-
-哪里出了错误呢
-
-其他服务器没有更改，反而显示正常； 
-	删除了所有的配置文件；
-	昨天的邮箱：状态，爆出了
-	我在16上都做过什么？ 添加过N个网关，
-猜测：
-	1 获取不到数据
-	
-PROBLEM:CPIC-DMP01_10.66.66.15
-CPU% used 80% on CPIC-DMP01_10.66.66.15,now idle 5.757094%
-
-HOST CPIC-DMP01_10.66.66.15 is down > 10 min
-
-
-邮件爆出来的服务器 ，这几台都down 了；
-15
-16
-17
-18
-
-
-综合一下的话，我昨天应该是添加成功了
-
-邮件不报警；(⊙o⊙)… 怎么办，自己就变红了
-
-果然改错了，不知道是那根筋不对； 
-
-等待10分钟，检查是否有问题吧； 日了狗了，还是有问题呢！  
-
-又更改了一些配置 ；其他服务器会从红色变回来，我删完配置再加没有意义；
-
-finally --- Gee ； 果然还是配置哪里有问题； 
-
-
-cpu user % > 90%  这是什么鬼？ 
-
-
-Neon_Kafka_proc_port9092  ## Neon_Kafka_proc_port9092
-
-Kafka_proc_port9092
-10.66.66.21
-10.66.66.22
-10.66.66.23
-
-hadoop-10.X_Zookeeper 2181 ## Neon_hadoop_Zookeeper2181
-10.66.66.24
-10.66.66.25
-10.66.66.26
-
-
-
-hadoop-HELIUM_HBase60000 / HDFS 8020 ## Neon_hadoop_HBase60000  Neon_hadoop_Namenode8020
-10.66.66.24
-10.66.66.25
-
-hbase 60020  HDFS 50010  Yarn 8041  ## Neon_hadoop_HBase60020[change] Neon_hadoop_DataNode50010  Neon_hadoop_NodeManager8041
-10.66.66.15
-10.66.66.16
-10.66.66.17
-10.66.66.18
-10.66.66.19
-
-10.66.66.21
-10.66.66.22
-10.66.66.23
-
-Yarn 8088  ## Neon_hadoop_ResourceManager8088  
-10.66.66.25
-
-Mysql 3306 / HiveMetaStore 9083 /Storm 8080 /Geode 10123 ## Neon_hadoop_mysql_port_3306   Neon_hadoop_hive-meta-store_port9083[change]  Neon_hadoop_Storm8080[change]  Neon_hadoop_GeodeLocator10123
-10.66.66.26
-
-Geode 40123  #  Neon_hadoop_GeodeServer40123
-10.66.66.32
-10.66.66.39
-10.66.66.40
-10.66.66.41
-10.66.66.42
-10.66.66.43
-10.66.66.44
-10.66.66.45
-
-
 ### 这些template 观察一下，如果通用的话，尽量不要做重复操作； 
 
 
-“tcp”
 
-### shell里看见一个超级风骚的语法； 
-#echo y|mkfs.ext4 /dev/sdc
+---------------
+那我们的nginx + keepalive  ；可以用docker 来测测吧； 
+脚本的 东西 又 暂时不行了 ； 一会看看nginx + keepalive ； 
+ 
+10.77.77.38 常剑的服务器是否需要做策略调整？  -- 丫的日志没有报错 -- 那还得找啊. 
 
-#mount /dev/sdc /opt/amos
+
+姜冰的服务器重建问题；  -- 待提问 ；
+10.66.66.40 
+
+ssh azureuser@10.66.66.57
+
+
+## salt-minion的那个 脚本需要优化一下，不然太麻烦了； 
+
+定一下初始化 标准；
+--script usage -- ok
+--tar the package ； -- copy it in 66.15 & OP03 ； 
+
+## When create a new server ； 
+## run the script ； 
+## change the salt-minion config；
+## logon salt-server OP03 ; salt-key -a keyname ； add your account； 
+## Do we need to set ansible enviroment ？  or we can use python script instead ； 
+
+ 
+ 
+### zabbix-agent 没有启动的话，zabbix 监控也不会启动呢 ；漏掉了一个zabbix-agent监控，为什么没有图，日；
+# chkconfig --level 2345 zabbix-agent on
+[root@CPIC-DMP07 ~]# chkconfig --list |grep  zabbix-agent
+zabbix-agent   	0:off	1:off	2:on	3:on	4:on	5:on	6:off
+
+
+### 过程挺忐忑呢，以为是主机名，其实是mac地址；
+   25  for i in 10.66.66.59 10.66.66.60 10.66.66.61;do echo $i;ssh azureuser@$i "cat /etc/salt/minion";done
+   26  salt-key -a id: 8469-8820-4559-5825-3830-5586-29
+   27  salt-key -a 8469-8820-4559-5825-3830-5586-29
+   28  salt-key -a 9983-7626-5028-9443-8698-0421-30
+   29  salt-key -a 1325-7755-6492-7258-7200-5691-30
+   
+   
+######## Render  ; suck nginx; 
+172.22.24.54
+172.22.25.22
+172.22.56.3
+172.22.57.30
+
+######### Make sure how much process does render have !!WOW
+ps -ef |grep render |grep -v grep
+ /etc/init.d/zamplus-render-server-v2 start
+#########
+
+#### well 这个真是 ； CentOS 不支持 ； 
+cd `dirname $0` 
+#### 进入目录，运行脚本； 
+
+eval(repr(object)) == object.
+
+str()一般是将数值转成字符串。 
+repr()是将一个对象转成字符串显示
+eval()函数十分强大，官方demo解释为：将字符串str当成有效的表达式来求值并返回计算结果
+
+#### 追进程
+# for i in `lsof -i:4000 |grep -v dev |grep -v COM |awk '{print $2}' `;do ps aux |grep -v grep |grep $i;done
+root      1630  0.0  0.0 132348 25336 ?        S    Jan13   0:00 python /usr/local/zamplus-cmdb/run.py
+root     12378  0.0  0.0 132348 29456 ?        S     2015   3:09 python /usr/local/zamplus-cmdb/run.py
+root     32019  0.0  0.0 132348 25332 ?        S    Jan05   0:00 python /usr/local/zamplus-cmdb/run.py
+root     41302  0.0  0.0 132348 25336 ?        S    Jan04   0:00 python /usr/local/zamplus-cmdb/run.py
+
+
+12.04 
+
+60053 
+
+DNS 名称
+mcsft-ts.chinacloudapp.cn
+主机名
+zampbeat8
+公用虚拟 IP (VIP)地址
+139.219.138.51
+内部 IP 地址
+10.66.66.38
+SSH 详细信息
+mcsft-ts.chinacloudapp.cn : 60025
+大小
+Standard_A1 (单核，1.75 GB 内存)
+SSH 证书指纹
+f57a9bacfd099dc544f6332115af405f
+位置
+中国东部
+部署 ID
+f7004ac2b9ca4f2cb834df53a760a14c
+订阅名称
+Windows Azure 企业
+订阅 ID
+e860844bf9-bfd8-4443-9b30-5b0c5845c162
+
+10.66.66.62 zampbeat9
+
+AZ-ServingDev01 10.66.70.4
+
+The server encountered an internal error. Please retry the request.
+
+A7
+虚拟网络mcsft-dev-corp
+子网Subnet-1(10.66.70.0/24)
+
+60022
+
+AZ-ServingDev01-AZ-ServingDev01-0-201512010418480305OS 磁盘读/写
+https://portalvhdsqv1jk5npvdk2p.blob.core.chinacloudapi.cn/vhds/a4kkr2hr.kwc201512010418460329.vhd
+AZ-ServingDev01-AZ-ServingDev01-0-201512010419040463数据磁盘无
+https://portalvhdsqv1jk5npvdk2p.blob.core.chinacloudapi.cn/vhds/oc52jmsn.zoy201512010418500071.vhd
+AZ-ServingDev01-AZ-ServingDev01-1-201512010419080023数据磁盘无
+https://portalvh
+
+AZ-ServingDev01-AZ-ServingDev01-0-201512010419040463	数据磁盘	无	
+https://portalvhdsqv1jk5npvdk2p.blob.core.chinacloudapi.cn/vhds/oc52jmsn.zoy201512010418500071.vhd
+AZ-ServingDev01-AZ-ServingDev01-0-201601150659430131	OS 磁盘	读/写	
+https://portalvhdsqv1jk5npvdk2p.blob.core.chinacloudapi.cn/vhds/AZ-Dev01-AZ-ServingDev01-2016-01-15.vhd
+AZ-ServingDev01-AZ-ServingDev01-1-201512010419080023	数据磁盘	无
+
+Blob https://portalvhdsqv1jk5npvdk2p.blob.core.chinacloudapi.cn/vhds/AZ-Dev01-AZ-ServingDev01-2016-01-15.vhd 发生了租约冲突。 长期运行的操作跟踪 ID 是: 350f4b54d12442bf8cb9c63e2a717612。
+
+这样 出来 应该没问题了； well ，it 
+
+状态
+正在启动
+DNS 名称
+az-dev01.chinacloudapp.cn
+主机名
+-
+公用虚拟 IP (VIP)地址
+42.159.246.54
+内部 IP 地址
+10.66.70.4
+SSH 详细信息
+az-dev01.chinacloudapp.cn : 60022
+大小
+Standard_A7 (8 核，56 GB 内存)
+SSH 证书指纹
+-
+位置
+中国东部
+部署 ID
+1433b12b187b4da5994eb2071871631b
+
+先删除这台服务器？然后再挂载这台 磁盘；
+再建立这台服务器； 

@@ -1,8 +1,8 @@
 #### Setup my account， seems like Under my acount it also can runs； 
 vince@TS-OP03:~$ sudo salt -G "ipv4:10.66.66.90" state.sls users.vince
 
-sudo salt -G "ipv4:10.66.66.45" state.sls users.vince
-sudo salt -G "ipv4:10.66.66.46" state.sls users.jerry
+sudo salt -G "ipv4:10.66.66.62" state.sls users.vince
+sudo salt -G "ipv4:172.22.25.34" state.sls users.vince
 sudo salt -G "ipv4:221.228.208.56" state.sls users.wangkai
 
 
@@ -91,9 +91,60 @@ click “Sync Package” ;
 -login the server need to update rpm : 
 
 ###### The service we can bounce in page 
-megatron ;
+
+########## zampda3.0 01.15 hotfix  ；zamplus-zampda-fe 不用重启服务；
+1. api（172.22.56.4） 
+zamplus-zampda-api30_1.6.0115.1600_amd64.deb 
+2. fe（172.22.56.13） 
+zamplus-zampda-fe30_1.6.0115.1600_amd64.deb 
+zamplus-zampda-api30_1.6.0115.1600_amd64.deb
+
+
+#############megatron ;
 ##After bouncing the service ,need to check the port ; 
-netstat -an |awk '{print $4}' |grep 19800 
+for i in `cat mega_baidu`;do echo $i;nc -n -v -w 1 $i 19800;done
+
+$ cat mega_baidu 
+172.22.56.21
+172.22.57.26
+172.22.57.27
+172.22.57.28
+172.22.57.73
+172.22.48.11
+172.22.57.74
+172.22.57.75
+
+vince@TS-OP03:~/tmp$ cat mega_sina 
+172.22.57.24
+172.22.57.25
+172.22.57.58
+172.22.57.71
+
+$ more mega_tanx 
+172.22.56.1
+172.22.57.22
+172.22.57.23
+172.22.57.40
+
+172.22.57.48
+172.22.48.9
+172.22.57.55
+
+172.22.57.71
+172.22.57.62
+172.22.57.61
+
+$ cat megatron |grep 10
+10.77.77.7
+10.77.77.8
+10.77.77.42
+10.77.77.52
+
+
+for i in 172.22.57.24 172.22.56.21;do echo $i;ssh $i "nc -n -v -w 1 $i 19800";done
+
+
+
 
 Robots ;
 zamplus-billing-server
@@ -108,6 +159,52 @@ ps -ef |grep "/usr/local/data-update-server/bin" |grep -v grep |grep -v task
 http://grafana.dev.zamplus.com:8813/#/dashboard/db/30-robots
 sudo /etc/init.d/zamplus-robots restart
 
+
+----------------------Azure VM安装过程 ；
+## 登录Azure 云 
+## OS ：centOS 6.7
+## CPU : A7 ； as other vms ；
+## acount ： you know ； close ssh key ； input passwd ；  
+## 为了精确费用 ； 填写以下项目
+云 cpic
+账户 azureCpic  
+## Set up
+
+
+------Azure
+云 azure-cpic-d；
+cpichosts 
+Maybe we need to update wiki . 
+http://wiki.dev.zamplus.com/display/OPTeam/Azure+CloudServer
+
+cloud： az-public01
+
+10.66.66.59 AZ-ListTest01 
+10.66.66.60 AZ-ListTest02 
+10.66.66.61 AZ-ListTest03 
+Account:app
+
+-------------------------Disk clean ；
+## 可清理 今天之外的文件 ； 
+/var/log/data_update/private/data/temp/anti_fraud  
+
+-------------------------Disk 2  清理一些备份释放空间；
+
+TS-OP02## 172.22.40.2 /dev/sdj        1.8T  1.6T  159G  91% /var/sdj
+225505528	/var/sdj/172.22.57.1/mysql_bin_backup
+416195292	/var/sdj/172.22.57.1
+591021724	/var/sdj/172.22.24.33/redis_backup
+591021728	/var/sdj/172.22.24.33
+1659186956	/var/sdj/
+
+root@TS-OP02:/var/sdj/172.22.24.33/redis_backup# du -sh * |head -n 30 |awk '{print $2}' |while read lines;do rm -r $lines;done
+-----------------------------DIsk 3
+###KafKa write too much data to the system . 
+ 
+/dev/sdc       1007G  864G   93G  91% /opt/amos   # du -sh /opt/amos/data/kafka-logs
+747G	/opt/amos/data/kafka-logs  
+
+-----------------------------------
 
     1  history 
     2  cd /usr/local/robots/data/model_common/
@@ -134,7 +231,7 @@ vxp
 
 
 
---------------------------------------------------
+--------------------------------------------------Ubuntu 初始化
 Initialize Microsoft cloud servers : Virtual Servers . 
 
 {
@@ -186,6 +283,18 @@ CenOS 初始化 init-----------------------------
 [root@CPIC-DMP01 init_centos]# ls
 epel-release-6-8.noarch.rpm  init_centos.sh  jdk-7u79-linux-x64.gz  rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
 ------------------------------
+###  NGINX Proxy add ;  here is the list ;
+http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=13764728
+-- conf file is under  ... ... 
+/etc/nginx/sites-enabled
+-----------------------------------For Adding new moniter Grafana
+Click First Graph; -- edit ; -- select "opt" ; select "metric" you already defined ;
+
+
+#### And we will got 3 record in the logfiles;
+{"data":[{"k":"CPIC-DMP06.amos-hub-mob.MesssageInCount","v":3563545},{"k":"CPIC-DMP06.amos-hub-mob.MesssageInPerSec","v":59},{"k":"CPIC-DMP06.amos-hub-conv.MesssageInCount","v":156716},{"k":"CPIC-DMP06.amos-hub-dm.MesssageInCount","v":59759596},{"k":"CPIC-DMP06.amos-hub-dm.MesssageInPerSec","v":1176},{"k":"CPIC-DMP06.amos-hub-cm.MesssageInPerSec","v":0},{"k":"CPIC-DMP06.amos-hub-cm.MesssageInCount","v":0},{"k":"CPIC-DMP06.amos-hub-conv.MesssageInPerSec","v":5},{"k":"CPIC-DMP06.amos-hub-di.MesssageInCount","v":43400150},{"k":"CPIC-DMP06.amos-hub-di.MesssageInPerSec","v":807}],"name":"kafkaperf","namespace":"opt","time":"2016-01-12 14:54:06"}
+{"data":[{"k":"CPIC-DMP08.amos-hub-cm.MesssageInPerSec","v":0},{"k":"CPIC-DMP08.amos-hub-mob.MesssageInCount","v":3379047},{"k":"CPIC-DMP08.amos-hub-dm.MesssageInPerSec","v":1176},{"k":"CPIC-DMP08.amos-hub-conv.MesssageInCount","v":161799},{"k":"CPIC-DMP08.amos-hub-cm.MesssageInCount","v":0},{"k":"CPIC-DMP08.amos-hub-dm.MesssageInCount","v":56507624},{"k":"CPIC-DMP08.amos-hub-conv.MesssageInPerSec","v":5},{"k":"CPIC-DMP08.amos-hub-mob.MesssageInPerSec","v":59},{"k":"CPIC-DMP08.amos-hub-di.MesssageInPerSec","v":801},{"k":"CPIC-DMP08.amos-hub-di.MesssageInCount","v":41308906}],"name":"kafkaperf","namespace":"opt","time":"2016-01-12 14:54:06"}
+{"data":[{"k":"CPIC-DMP07.amos-hub-mob.MesssageInPerSec","v":60},{"k":"CPIC-DMP07.amos-hub-cm.MesssageInCount","v":0},{"k":"CPIC-DMP07.amos-hub-di.MesssageInPerSec","v":808},{"k":"CPIC-DMP07.amos-hub-conv.MesssageInPerSec","v":5},{"k":"CPIC-DMP07.amos-hub-conv.MesssageInCount","v":161926},{"k":"CPIC-DMP07.amos-hub-cm.MesssageInPerSec","v":0},{"k":"CPIC-DMP07.amos-hub-dm.MesssageInPerSec","v":1176},{"k":"CPIC-DMP07.amos-hub-di.MesssageInCount","v":41029397},{"k":"CPIC-DMP07.amos-hub-mob.MesssageInCount","v":3376689},{"k":"CPIC-DMP07.amos-hub-dm.MesssageInCount","v":56157165}],"name":"kafkaperf","namespace":"opt","time":"2016-01-12 14:54:06"}
 
 
 PostThinging . 

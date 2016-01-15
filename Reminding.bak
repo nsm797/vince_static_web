@@ -17,6 +17,8 @@ hadoop insert   172.22.24.0/21
 DB: 172.22.32.0/21 DB  
 Control: 172.22.40.0/21 
 
+
+
 NGINX AGENT :
 ## 小平台；囧 
 http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=13764728
@@ -28,13 +30,19 @@ Add proxy in here ;/etc/nginx/sites-enabled
 ## 大平台；
 221.228.208.16
 Disk usage problem： Bony and JiangBing take charge of these hadoop servers . you need to take care others ; 
-172.22.5.x    hadoop 
+172.22.5.x    hadoop  
 172.22.6.x    hadoop HA ? 
 172.22.16.x   zookeeper
 172.22.10.x   hadoop
 172.22.49.x   
 
-
+AzureCloudServer ： 
+http://wiki.dev.zamplus.com/display/OPTeam/Azure+CloudServer
+400-089-0365
+support.it@zamplus.com
+18601622660
+NeonCluster：
+http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=107809983
 -------------My Working area (Azure); I will take charge this .
 	CenOS :
 NameNode
@@ -77,6 +85,49 @@ Ubuntu : pTracking (ZAMP tracking data[r]: For SmartPixel & ad tracking [can't r
  via shengjun ; 
 172.22.25.2  ;SSO & fe3 
 
+###############Neon_Cluster
+##Neon_Kafka_proc_port9092
+10.66.66.21
+10.66.66.22
+10.66.66.23
+
+##Neon_hadoop_Zookeeper2181
+10.66.66.24
+10.66.66.25
+10.66.66.26
+
+## Neon_hadoop_HBase60000  Neon_hadoop_Namenode8020
+10.66.66.24
+10.66.66.25
+
+## Neon_hadoop_HBase60020[change] Neon_hadoop_DataNode50010  Neon_hadoop_NodeManager8041
+10.66.66.15
+10.66.66.16
+10.66.66.17
+10.66.66.18
+10.66.66.19
+
+10.66.66.21
+10.66.66.22
+10.66.66.23
+
+## Neon_hadoop_ResourceManager8088  
+10.66.66.25
+
+## Neon_hadoop_mysql_port_3306 Neon_hadoop_hive-meta-store_port9083[change] Neon_hadoop_Storm8080[change] Neon_hadoop_GeodeLocator10123
+10.66.66.26
+
+## Neon_hadoop_GeodeServer40123
+10.66.66.32
+10.66.66.39
+10.66.66.40
+10.66.66.41
+10.66.66.42
+10.66.66.43
+10.66.66.44
+10.66.66.45
+
+
 --------------The web site . 
 http://221.228.208.30:38000/             # zlogin via domain accoutn; 
 http://192.168.1.201:8877/deploy/admin/  # PackageMan via Domain
@@ -111,22 +162,53 @@ salt-agent
 ---------------------------
 Red Hat Enterprise Linux Server release 6.4 (Santiago)
 
-------------INSTALL SALT-CLIENT ; 
+------------INSTALL SALT-CLIENT; 
 ### Added one nameserver "114"
 $ tail -n 2 /etc/resolv.conf 
 nameserver 10.66.66.33
 nameserver 114.114.114.114
 
-###
-$ yum -y update
-$ yum search salt-minion
 $ yum install salt-minion
-$ sudo rpm -qa |grep salt
-salt-2015.5.5-1.el6.noarch
-salt-minion-2015.5.5-1.el6.noarch
 
 然后再 修改 什么配置 文件来着？ 
 
 连接过去，只在外网；
 
+【先把手头的工作做好 做精，再考虑那些 重要的 事吧。小流不行，就垮了】
+【要做的事情，铭记在心，记录在册，总要挖时间做的；】
+
 -------------
+----------------------------------------------
+
+脚本初始化 
+CentOS 
+	salt-minion 's config                            -ok
+	zabbix 's config ;                               -ok
+	service start/auto start for salt & zabbix       -ok
+	zabbix's new config file's copy.                 -ok
+	tar the package                                  -ok
+	test the usages                                  
+	
+	logon OP03 ; salt-key -a the right key ;  add my account ; 
+	mointor ; 
+	logrotate ;
+	
+ubuntu:
+	
+	salt-key -a (here is the MAC address) ; let's change it to the hostname ;  add my account ;
+	mointor 
+	logrotate ;
+	
+zabbix: 
+	How to add server automaticlly .  in one subnet ? 
+	
+---------Important things: 
+Make sure all the CentOS server has been runned the init scripts ;
+nginx+ keepalive ;
+ansible ; tar it to clould ;
+Chuck's script  test if it can be used for the update ! 
+
+
+zambeat9
+
+A6 
