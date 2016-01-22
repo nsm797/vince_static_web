@@ -62,7 +62,6 @@ ssh azureuser@10.66.66.57
 zabbix-agent   	0:off	1:off	2:on	3:on	4:on	5:on	6:off
 
 
-
 ### 过程挺忐忑呢，以为是主机名，其实是mac地址；
    25  for i in 10.66.66.59 10.66.66.60 10.66.66.61;do echo $i;ssh azureuser@$i "cat /etc/salt/minion";done
    26  salt-key -a id: 8469-8820-4559-5825-3830-5586-29
@@ -129,10 +128,6 @@ e860844bf9-bfd8-4443-9b30-5b0c5845c162
 
 10.66.66.62 zampbeat9
 
-
-
-
-
 AZ-ServingDev01 10.66.70.4
 
 The server encountered an internal error. Please retry the request.
@@ -142,7 +137,6 @@ A7
 子网Subnet-1(10.66.70.0/24)
 
 60022
-
 
 AZ-ServingDev01-AZ-ServingDev01-0-201512010418480305OS 磁盘读/写
 https://portalvhdsqv1jk5npvdk2p.blob.core.chinacloudapi.cn/vhds/a4kkr2hr.kwc201512010418460329.vhd
@@ -182,7 +176,392 @@ SSH 证书指纹
 部署 ID
 1433b12b187b4da5994eb2071871631b
 
-先删除这台服务器？  然后再挂载这台 磁盘；
+先删除这台服务器？然后再挂载这台 磁盘；
 再建立这台服务器；
+------------------------------------
 
+################ 2016-01-19  chuck's scrpt test ; 
+
+$ curl http://cmdb.zamplus.local:4000/dq?ip=
+{}vince@TS-OP03:~/tmpexit
+exit
+vince@TS-OP03:~$ curl http://cmdb.zamplus.local:4000/dq?ip=172.22.56.21
+{
+  "hostname": "TS-SERV21",
+  "ip": "172.22.56.21",
+  "sn": "GFXXZ22"
+# This will wait for so long ; 
+root@TS-OP03:~# salt -G "ipv4:172.22.56.21" cmd.run "netstat -tlnp"
+
+# This will return so fast ； 
+# salt GFXXZ22 cmd.run "netstat -tlnp"
+
+
+## nothing feedback ； Gee  ； 之前的cmdb 库都是 预定义的； -- 推测 ，这个值一定可以查询的吧？  
+}vince@TS-OP03:~$ curl http://cmdb.zamplus.local:4000/dq?ip=10.66.66.16
+
+~# salt-key -L |grep GFXXZ22   ；wow 原来是个key  ； 那我以后就得 尽量用主机名来命名 key 了； 用那一长串； 会导致 无法 对应操作； 
+GFXXZ22 
+
+##那个cmdb库的话，我们可以好好利用一下 ，一个IP返回一个key ； 我们就可以 用salt 集群 操作 无数服务器了；
+
+看看cmdb库；就是 一个 IP返回KeyID 的程序；
+
+## 应用； 大型集群的 升级，配置修改，服务重启； 
+
+## 源头 在 ubuntu 的初始化脚本；
+##第二个问题就是控制并行；  因为之前的都是 循环处理吗？
+
+### 用给自己的 还是 用 strong的cmdb  ? strong 那个吧，问问是怎么玩的，我时候看不懂呢；
+
+Hi 这个cmdb库；
+curl http://cmdb.zamplus.local:4000/dq?ip=172.22.56.21
+{
+  "hostname": "TS-SERV21",
+  "ip": "172.22.56.21",
+  "sn": "GFXXZ22"
+  
+我去程序上看了一眼； 
+
+root@TS-ZAMPDA-MULTI:~# cat  /usr/local/zamplus-cmdb/run.py |grep -v "#"
+__author__ = 'zamplus'
+
+from webapp import webapp
+from webapp.task.check import job_function
+from flask_apscheduler import APScheduler
+import logging
+
+class Config(object):
+    JOBS = [
+        {
+            'id': 'job1',
+            'func': '__main__:job_function',
+            'args': (),
+            'trigger': {
+                'type': 'cron',
+                'second': 0
+            }
+        }
+    ]
+
+    SCHEDULER_VIEWS_ENABLED = True
+
+
+if __name__ == '__main__':
+    logging.basicConfig()
+    webapp.debug = True;
+
+
+
+    webapp.run(use_reloader=False,host="0.0.0.0",port=4000,processes=4)
+
+
+start() {
+        nohup python /usr/local/zamplus-cmdb/run.py &
+{ 说明；
+nohup 命令运行由 Command参数和任何相关的 Arg参数指定的命令，忽略所有挂断（SIGHUP）信号。在注销后使用 nohup 命令运行后台中的程序。要运行后台中的 nohup 命令，添加 & （ 表示“and”的符号）到命令的尾部。 用途：LINUX命令用法，不挂断地运行命令。
+}
+
+
+
+
+
+
+
+
+标签数据FTP输出，ftp的用户名、密码是管理员在合作伙伴管理中设定的，
+分别是合作伙伴名称和FTP密码，  
+用户名和密码存储在mysql中。 ---------!   
+
+数据量取决于第一方数据的规模。
+任务跑完会产生多个数据文件，放到不同的目录，不同的目录对应不同的ftp账户。
+想要达到的效果是一个vsftpd+ mysql的环境，
+生产环境上mysql已经提供，需要修改vsftpd相应的配置，和一个脚本来
+根据ftp用户名产生对应的FTP目录和相应的配置文件(如果需要的话)。
+
+是的，P-DMP内置一个ftp，
+比如太保的内部系统可能用到自己DMP的数据做推荐，或在DSP做广告投放，
+就需要吧DMP内部的数据导出来。
+
+---- vsftpd 缺失 
+
+
+
+### 布置ftp环境时发生的错误； 
+d# apt-file search libgcc_s.so.1
+gcc-snapshot: /usr/lib/gcc-snapshot/lib/libgcc_s.so.1
+gcc-snapshot: /usr/lib/gcc-snapshot/lib32/libgcc_s.so.1
+gcc-snapshot: /usr/lib/gcc-snapshot/libx32/libgcc_s.so.1
+
+### 缺失文件 呢 ，Gee ；-- maybe wrong -- maybe right ； 
+
+用docker 来做这个实验够坑的呀 ；  建一个云主机？ 来测试呢？微软的？　小空间的？　
+
+
+ssh azureuser@10.66.66.66
+
+这感觉，就想被 问题 困住呢； 不知道该 如何 做下一步； 
+
+1 尽快配置 mysql vsftp 环境，用我的测试机；
+2 为了部署方便，尽快； 建立自己所管辖的 cmdb库； 为部署方便 考虑；--- 针对阿里云
+3 整理 最终演讲稿； 熟背于心； --- 明天 熟背于心 --- 后天正式 搞定 -- 报销事宜（下周） --- 转正？ -- 居住证办理（如何自动延期）-- 社保，公积金迁移事宜，是否要提前打声招呼？ 
+
+那我们的环境； 以后 vsftpd 了； 
+
+vsftpd 环境已有的话； gee ；--- 不能影响 线上ftp ，万一搞坏了呢--从头新建环境 -- 配置ftp ；大概知道
+--- start 
+
+180
+4R6C33ew
+insert into users (name,passwd) values ("180",password("4R6C33ew"));
+
+> mysql -u vsftpd vsftpdvu -p
  
+    42  locate libgcc_s.so.1
+   43  cat /etc/ld.so.conf
+   44  ldconfig
+   45  ldconfig -p | grep libgcc
+   46  ll /lib/
+   47  ll
+   
+root@azure-vince01:/etc/vsftpd/user_config# ldconfig -p | grep libgcc
+	libgccpp.so.1 (libc6,x86-64) => /usr/lib/libgccpp.so.1
+	libgcc_s.so.1 (libc6,x86-64) => /lib/x86_64-linux-gnu/libgcc_s.so.1
+	
+libgcc_s.so.1 must be installed for pthread_cancel to work
+
+deb-src http://mirrors.zamplus.local/ubuntu/ precise main restricted universe multiverse
+deb-src http://mirrors.zamplus.local/ubuntu/ precise-updates main restricted universe multiverse
+deb-src http://mirrors.zamplus.local/ubuntu/ precise-backports main restricted universe multiverse
+deb-src http://mirrors.zamplus.local/ubuntu/ precise-security main restricted universe multiverse
+deb-src http://mirrors.zamplus.local/ubuntu/ precise-proposed main restricted universe multiverse
+
+I had the same problem, running vsftpd on Ubunto 13.10, and none of the suggestions worked.
+After a lot of googleing, I stumbled upon the same issue in the Redhat Bugzilla
+Their solution, which worked for me: recompile the vsftpd package after modifying the source file defs.h (the DEFINE VSFTP_AS_LIMIT has to be changed to the value "400UL * 1024 * 1024"). I don't claim to understand what that does, but now everything works perfectly for me.
+To recompile the package, follow these steps (this is for Ubuntu 13.10, but should work similar for other releases):
+add source repositories to /etc/apt/sources.list by adding the line deb-src http://archive.ubuntu.com/ubuntu saucy main universe restricted
+Update the package lists: sudo apt-get update
+Install some utilities needed for compiling stuff: sudo apt-get install fakeroot build-essential
+Get everything that is needed for compiling vsftpd: sudo apt-get build-dep vsftpd
+Get the vsftpd sources: apt-get source vsftpd (this works as a non-root user)
+Change VSFTP_AS_LIMIT in the defs.h file to the value 400UL * 1024 * 1024
+Commit the changes, or compile will fail: dpkg-source --commit. This will create a new patch file. You are then prompted to enter a name and info for that post.
+Re-build vsftpd: fakeroot buildpackage. It should compile, and there should be a new .deb-file created.
+Install this newly created package: dpkg --install vsftpd_3.0.2-1ubuntu2_amd64.deb (change the file name accordingly)
+That's it, worked for me. It might be a good idea to put that package on hold so it will not be overwritten when a new official package is released by the Ubuntu team.
+Update: I just tried this on Ubuntu 12.04 LTS, worked as well.
+
+我如果要重新 编译 呢？ 
+
+默认的 那个vsftpd  简陋的 要屎啊； --- 研究一下 ，为什么这个容器 不行？
+
+－－　编包？　dh_make 不存在呢！ 
+
+---- 我们的环境貌似不存在源码呢！ 名字记错，次奥的； 
+apt-get install dh-make
+
+### 报错 ；
+Cannot get username; neither LOGNAME nor USER is set in the environment!
+
+### 
+到修改的时候 ，又出错了，日的； 怎么办呢？ --- 
+
+
+
+
+
+
+VSFTP 账户通过 pam_mysql.so 模块 登录
+
+登录报错，且总是连接拒绝：
+libgcc_s.so.1 must be installed for pthread_cancel to work
+Login failed.
+ftp> 
+
+可是我看到模块是加载上的，有人遇到过吗？ 
+
+$ ldconfig -p | grep libgcc
+	libgccpp.so.1 (libc6,x86-64) => /usr/lib/libgccpp.so.1
+	libgcc_s.so.1 (libc6,x86-64) => /lib/x86_64-linux-gnu/libgcc_s.so.1
+
+$ cat /etc/ld.so.conf
+include /etc/ld.so.conf.d/*.conf
+include /lib/x86_64-linux-gnu
+
+---------------------
+about what can I do about this part 
+
+-生产环境上mysql已经提供，需要修改vsftpd相应的配置，和
+
+一个脚本来根据ftp用户名产生对应的FTP目录和相应的配置文件(如果需要的话)。
+
+-部署在客户那边
+-- 问题一 ，是否可以那边 一开始是正常 ，用了 mysql模块后就不正常了呢？--很有可能-- 需要我自己亲自做实验，建立ftp账户；
+--- 如果是这样，就需要自己想 解决 方案 提供给客户了.  -- 锁定我自己的测试机 ；
+
+pam 模块没有安装好？  
+
+卸载了libgcc ，服务器被玩坏 囧；
+
+--- 默认监控 -- zabbix 添加默认监控 ； --- 不确定是否有 必要呢 ；
+
+--- 初始化 -- 和配置管理 不做 ，简直是 作死 ，今天 加 四个账户 在 6台服务器上， dns 有问题；  
+
+--- MD 让老子更新azure 文档； ok ；
+
+zampbeat 9 
+
+### mysql root passwd 自己的坑；
+
+### azure的坑： /etc/resolv.conf 
+{
+domain mcsft-ts.b1.internal.chinacloudapp.cn
+search mcsft-ts.b1.internal.chinacloudapp.cn
+nameserver 10.66.66.29
+nameserver 10.66.66.33
+}
+
+install power shell ; 
+
+
+
+
+
+账户已添加到对应服务器上，请使用Zlogin登录； 
+jerry
+michael
+frankye
+neilfu
+robo
+
+
+10.66.66.68
+10.66.66.31
+10.66.66.11
+10.66.66.12
+10.66.66.13
+10.66.66.14 
+
+#### my cat ; 3 servers; same network ;    mysql 3306 ; 
+####
+
+因需要测试MyCat数据中间件对于MySql的水平扩展能力，申请3台机器。
+1.机器需处于3台不同的物理机上(建议处于同一网段以接近实际使用场景)
+2.机器需开通mysql的3306端口供数据访问，并提供用户及密码
+3.用户需提供安装软件的能力(如不能提供需要提前安装好JVM1.7及Mysql5.5)
+4.需提供一台机器的80访问端口
+
+
+ll  /var/log/data_update/output/domain_black_list/domain_black_list.txt
+lrwxrwxrwx 1 root root 79 Jan 21 18:12 /var/log/data_update/output/domain_black_list/domain_black_list.txt -> /var/log/data_update/private/data/data/domaint.txt
+
+ll /var/log/data_update/private/data/data/anti_fraud
+
+
+-------for English presentaion；
+
+
+产品概述图；
+founder 图
+
+原理图
+
+数据架构图
+zampda图
+dmp图
+BDU
+China Dep
+data 装逼图
+
+
+11:00-11:10         	Lesley Luo
+11:10-11:20         	Vincent Nan
+11:20-11:30	    
+
+
+心态；假设你是一个销售； 你的潜在意识 有 教师哦，好好做吧；
+
+卡住，突然忘记的情况，害怕尴尬；口误；吐词错误； 笑声； 这些都还好； 最主要的 你要 保持 精神，努力恢复心态；
+自知自信，不妄自菲薄；
+
+头脑清醒；
+
+把问题 讲准，原理讲通即可；    
+
+交流； 记住接别人的 梗； 
+
+zamplus-data-update-server-v3
+
+apt-get install -y --force-yes zamplus-data-update-server-v3
+
+apt-get install -y --force-yes zamplus-megatron-server
+
+######date-update ; [has 2 processed ; so we need to kill TWICE;]
+ps -ef |grep "/usr/local/data-update-server/bin" |grep -v grep |grep -v task |awk '{print $2}' |while read lines;do kill -9 $lines;done
+## check again
+ps -ef |grep "/usr/local/data-update-server/bin" |grep -v grep |grep -v task 
+ps -ef |grep "/usr/local/data-update-server/bin" |grep -v grep |grep -v task |awk '{print $2}'
+ps -ef |grep "/usr/local/data-update-server/bin" |grep -v grep |grep -v task |awk -v var=$2 '{print $2}'
+
+kill -9 `ps -ef |grep "/usr/local/data-update-server/bin" |grep -v grep |grep -v task |awk '{print $2}'`
+kill -9 `ps -ef |grep "/usr/local/data-update-server/bin" |grep -v grep |grep -v task |awk -v var=$2 '{print $2}'`                                   
+                                        
+                                        
+172.22.56.1
+172.22.56.21
+
+172.22.57.22 8NJWZ22
+172.22.57.23 1884R12
+172.22.57.40 8ZJWZ22
+172.22.57.48 8W8PKY1
+
+
+
+172.22.57.24 BZJWZ22
+172.22.57.25 JSHPW22
+172.22.57.26 FSHPW22
+172.22.57.27 CSHPW22
+172.22.57.28 JYWQ202
+172.22.57.73 4DQ8H62
+172.22.48.11 HQ9K002
+172.22.48.9  J09K002
+172.22.57.55 9P5K002
+172.22.57.71 4DQVF62
+172.22.57.58 2P5K002
+172.22.57.62 709K002
+172.22.57.61 3N5K002
+172.22.57.74 4FP8H62
+172.22.57.75 4FN3H62
+172.22.57.78 4FQ1H62
+
+
+nc -n -v -w 1 127.0.0.1 19800
+
+172.22.56.1
+
+172.22.56.21
+172.22.57.22
+172.22.57.23
+172.22.57.40
+
+172.22.57.48
+172.22.57.24
+172.22.57.25
+172.22.57.26
+172.22.57.27
+172.22.57.28
+172.22.57.73
+172.22.48.11
+172.22.48.9
+172.22.57.55
+172.22.57.71
+172.22.57.58
+172.22.57.62
+172.22.57.61
+172.22.57.74
+172.22.57.75
+172.22.57.78
+
+----------------------
+/data

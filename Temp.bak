@@ -909,13 +909,12 @@ $ more mega_tanx
 172.22.57.62
 172.22.57.61
 
-cat mega_sina 
+
+vince@TS-OP03:~/tmp$ cat mega_sina 
 172.22.57.24
 172.22.57.25
 172.22.57.58
 172.22.57.71
-
-
 
 
 Zabbix server IP: 192.168.101.11
@@ -1161,7 +1160,109 @@ cat mega_sina
 sshpass-1.05-1.el6.rf.x86_64
 
 
+403889328	/var/log/billing/log
 
+
+     
+# cat admin                  
+local_root=/home/ftp                  
+anon_world_readable_only=NO              
+write_enable=YES             
+anon_mkdir_write_enable=YES  
+anon_upload_enable=YES               
+anon_other_write_enable=YES  
+
+
+# cat download              
+local_root=/home/ftp        
+anon_world_readable_only=NO 
+
+
+# cat web                  
+local_root=/var/www        
+anon_world_readable_only=NO
+anon_umask=022             
+write_enable=YES           
+anon_mkdir_write_enable=YES
+anon_upload_enable=YES     
+anon_other_write_enable=YES
+
+
+
+
+
+##########
+mysql> use vsftpdvu;
+Database changed
+mysql> 
+mysql> 
+mysql> create table users(name char(16) binary,passwd char(16) binary);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into users (name,passwd) values ("download",password("download"));
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into users (name,passwd) values ("admin",password("admin"));
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into users (name,passwd) values ("web",password("web"));
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> grant select on vsftpdvu.users to virtual@localhost identified by "123456";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> quit
+
+# mysql -u virtual -p123456 vsftpdvu
+
+mysql> select * from users;
++----------+------------------+
+| name     | passwd           |
++----------+------------------+
+| download | *E35CB5A3C760245 |
+| admin    | *4ACFE3202A5FF5C |
+| web      | *7F3BF7031A324F9 |
++----------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> 
+
+Install a new environment £¿ where is mysql £»where is vsftpd £¿ 
+
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise-updates main restricted
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise-updates main restricted
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise universe
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise universe
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise-updates universe
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise-updates universe
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise-updates multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise-updates multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise-backports main restricted universe multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise-backports main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu precise-security main restricted
+deb-src http://security.ubuntu.com/ubuntu precise-security main restricted
+deb http://security.ubuntu.com/ubuntu precise-security universe
+deb-src http://security.ubuntu.com/ubuntu precise-security universe
+deb http://security.ubuntu.com/ubuntu precise-security multiverse
+deb-src http://security.ubuntu.com/ubuntu precise-security multiverse
+
+deb http://mirrors.sohu.com/ubuntu/ precise-updates main restricted
+deb-src http://mirrors.sohu.com/ubuntu/ precise-updates main restricted
+deb http://mirrors.sohu.com/ubuntu/ precise universe
+deb-src http://mirrors.sohu.com/ubuntu/ precise universe
+deb http://mirrors.sohu.com/ubuntu/ precise-updates universe
+deb-src http://mirrors.sohu.com/ubuntu/ precise-updates universe
+deb http://mirrors.sohu.com/ubuntu/ precise multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ precise multiverse
+deb http://mirrors.sohu.com/ubuntu/ precise-updates multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ precise-updates multiverse
+deb http://mirrors.sohu.com/ubuntu/ precise-backports main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ precise-backports main restricted universe multiverse
+
+
+42.159.247.176
 
 
 

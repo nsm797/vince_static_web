@@ -910,11 +910,6 @@ $ more mega_tanx
 172.22.57.61
 
 
-vince@TS-OP03:~/tmp$ cat mega_sina 
-172.22.57.24
-172.22.57.25
-172.22.57.58
-172.22.57.71
 
 
 Zabbix server IP: 192.168.101.11
@@ -1160,7 +1155,221 @@ cat mega_sina
 sshpass-1.05-1.el6.rf.x86_64
 
 
+403889328	/var/log/billing/log
 
 
+     
+# cat admin                  
+local_root=/home/ftp                  
+anon_world_readable_only=NO              
+write_enable=YES             
+anon_mkdir_write_enable=YES  
+anon_upload_enable=YES               
+anon_other_write_enable=YES  
+
+
+# cat download              
+local_root=/home/ftp        
+anon_world_readable_only=NO 
+
+
+# cat web                  
+local_root=/var/www        
+anon_world_readable_only=NO
+anon_umask=022             
+write_enable=YES           
+anon_mkdir_write_enable=YES
+anon_upload_enable=YES     
+anon_other_write_enable=YES
+
+
+
+
+
+##########
+mysql> use vsftpdvu;
+Database changed
+mysql> 
+mysql> 
+mysql> create table users(name char(16) binary,passwd char(16) binary);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into users (name,passwd) values ("download",password("download"));
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into users (name,passwd) values ("admin",password("admin"));
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into users (name,passwd) values ("web",password("web"));
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> grant select on vsftpdvu.users to virtual@localhost identified by "123456";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> quit
+
+# mysql -u virtual -p123456 vsftpdvu
+
+mysql> select * from users;
++----------+------------------+
+| name     | passwd           |
++----------+------------------+
+| download | *E35CB5A3C760245 |
+| admin    | *4ACFE3202A5FF5C |
+| web      | *7F3BF7031A324F9 |
++----------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> 
+
+Install a new environment ？ where is mysql ；where is vsftpd ？ 
+
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise-updates main restricted
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise-updates main restricted
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise universe
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise universe
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise-updates universe
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise-updates universe
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise-updates multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise-updates multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ precise-backports main restricted universe multiverse
+deb-src http://mirrors.ustc.edu.cn/ubuntu/ precise-backports main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu precise-security main restricted
+deb-src http://security.ubuntu.com/ubuntu precise-security main restricted
+deb http://security.ubuntu.com/ubuntu precise-security universe
+deb-src http://security.ubuntu.com/ubuntu precise-security universe
+deb http://security.ubuntu.com/ubuntu precise-security multiverse
+deb-src http://security.ubuntu.com/ubuntu precise-security multiverse
+
+deb http://mirrors.sohu.com/ubuntu/ precise-updates main restricted
+deb-src http://mirrors.sohu.com/ubuntu/ precise-updates main restricted
+deb http://mirrors.sohu.com/ubuntu/ precise universe
+deb-src http://mirrors.sohu.com/ubuntu/ precise universe
+deb http://mirrors.sohu.com/ubuntu/ precise-updates universe
+deb-src http://mirrors.sohu.com/ubuntu/ precise-updates universe
+deb http://mirrors.sohu.com/ubuntu/ precise multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ precise multiverse
+deb http://mirrors.sohu.com/ubuntu/ precise-updates multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ precise-updates multiverse
+deb http://mirrors.sohu.com/ubuntu/ precise-backports main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ precise-backports main restricted universe multiverse
+
+
+42.159.247.176
+
+
+
+10.77.77.8
+3R7QH42:
+    
+----------
+172.22.56.1
+DSHPW22:
+    
+----------
+172.22.57.78
+4FQ1H62:
+    
+----------
+172.22.57.74
+4FP8H62:
+    
+----------
+172.22.48.11
+HQ9K002:
+    
+----------
+172.22.57.61
+3N5K002:
+    
+----------
+172.22.57.26
+FSHPW22:
+    
+----------
+172.22.48.9
+J09K002:
+    
+----------
+172.22.57.23
+8ZJWZ22:
+    
+----------
+172.22.57.56
+3X8PKY1:
+    
+----------
+172.22.57.48
+1884R12:
+    
+----------
+172.22.56.21
+GFXXZ22:
+    
+----------
+172.22.57.75
+4FN3H62:
+    
+----------
+172.22.57.24
+BZJWZ22:
+    
+----------
+172.22.57.58
+2P5K002:
+    
+----------
+172.22.57.27
+CSHPW22:
+    
+----------
+10.77.77.52
+JYWQ202:
+    
+----------
+172.22.57.73
+4DQ8H62:
+    
+----------
+172.22.57.22
+8NJWZ22:
+    
+----------
+172.22.57.25
+JSHPW22:
+    
+----------
+10.77.77.7
+JJ6QH42:
+    
+----------
+172.22.57.40
+8W8PKY1:
+    
+----------
+172.22.57.55
+9P5K002:
+    
+----------
+172.22.57.28
+1THPW22:
+    
+----------
+10.77.77.42
+8JLH002:
+    
+----------
+172.22.57.62
+709K002:
+    
+----------
+172.22.57.71
+4DQVF62:
+
+/usr/loca/who_server 目录下 。 建立软链接ln -s distribute/release_who_server conf 
+
+3:开启who server 。 
 
 

@@ -1,7 +1,7 @@
 #### Setup my account， seems like Under my acount it also can runs； 
 vince@TS-OP03:~$ sudo salt -G "ipv4:10.66.66.90" state.sls users.vince
 
-sudo salt -G "ipv4:10.66.66.62" state.sls users.vince
+sudo salt -G "ipv4:10.77.77.2" state.sls users.vince
 sudo salt -G "ipv4:172.22.25.34" state.sls users.vince
 sudo salt -G "ipv4:221.228.208.56" state.sls users.wangkai
 
@@ -27,25 +27,40 @@ question1 ：
 	zlogin 到 zampread ；zampuser ； 貌似可以控制 sudo 时间 ； 果然有个 SUDOTIME；
 	login with domain account ，vincent；  click "privilege" ,check the key account ,edit the time .
 
-Steps:
-	1. Added git (can't find git domain; can't ping git; can't access sso[test] ,SSO ? )
-		[root@CPIC-DMP11 local]# route add -net 10.8.8.0/24 gw 0.0.0.0
-			SIOCADDRT: Invalid argument
-		[root@CPIC-DMP11 local]# route add -net 10.8.8.0/24 gw 10.66.66.1
-	2. Added an nginx website ,setup php & nginx . (fixed php config problem)
-  3. Added web root , set zampread own via zlogin (web: WOW, the way is impressing).
-	4. Added host record in file. fixed step 2 . 
-	... to be continued .
-	 
--------------------------------------------------------
-#### Update DNS 
-DNS 172.22.40.250 
+{ Instance：Zlogin   非常厉害呢！
 
-10.66.66.29  AZ-DNS01
-10.66.66.33  AZ-DNS02
+root@TS-OP03:/srv/salt/users# su - michael
+michael@TS-OP03:~$ zlogin 
 
-Add your record manually ### Geee ....
-bind9 reload 
+Welcom use Zlogin:
+
+ l : list my available hosts.
+ lg : list my groups
+ ag [GROUPNAME] : add group
+ dg [GROUPNAME] : delete group
+ lh [GROUPNAME] : list ips from a group
+ ah [GROUPNAME] [IP] : add ip to a group
+ dh [GROUPNAME] [IP] : delete ip from a group
+ h : display help
+ q : quit zlogin
+ z [NUM] : login to special hosts.
+ get [NUM] [LOCAL DIR] [REMOTE FILE] : get remote file from [NUM] to local dir.
+ put [NUM] [LOCAL FILE] [REMOTE DIR] : put local file from local to [NUM].
+
+zlogin>: l
+0	10.66.66.11		 
+
+zlogin>: z 0
+
+直接就登录到 10.66.66.11了
+
+}
+
+
+-------------------------------------------VSFTP
+http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=107812145
+-------------------------------------------Baidu云开发者账号事宜；
+http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=107812134
 --------------------------------------------Rpm_build ;
 
 
@@ -92,6 +107,13 @@ click “Sync Package” ;
 
 ###### The service we can bounce in page 
 
+
+###### Special package upated ;
+zamplus-sso-server	4.2.8  ## need to restart service ，you can find it in /etc/init.d ； update master at first ，connect to Albin
+zamplus-sso-fe	1.9.0.0  ## update this package ；no service to bounce ;
+## than update zamplus-sso-server in slave ; 
+
+
 ########## zampda3.0 01.15 hotfix  ；zamplus-zampda-fe 不用重启服务；
 1. api（172.22.56.4） 
 zamplus-zampda-api30_1.6.0115.1600_amd64.deb 
@@ -99,7 +121,33 @@ zamplus-zampda-api30_1.6.0115.1600_amd64.deb
 zamplus-zampda-fe30_1.6.0115.1600_amd64.deb 
 zamplus-zampda-api30_1.6.0115.1600_amd64.deb
 
+#############server poi http 
+1 update zamplus-server-poi_0.0.1.5_amd64.deb ；
+2   vi conf/svr.conf ## how to connect mysql；
+    228  cat create_table.sql  ## how to create tables
+3   # mysql -u user_poi --host=172.22.57.4 -p 
+	mysql> show databases;
+	mysql> use db_poi;
+	mysql> show tables;
+	
+mysql> ALTER DATABASE CHARACTER SET "utf8";
+Query OK, 1 row affected (0.02 sec)
 
+mysql> drop table if exists poi_cache;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> drop table if exists poi_tag;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> drop table if exists raw_json;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+4. Maybe you need to change nginx file ; # cat /etc/nginx/sites-enabled/poi.conf 
+
+5 .Use the sick way to bounce poi ;
+  266  ./run.sh start
+  271  ./run.sh stop
+  
 #############megatron ;
 ##After bouncing the service ,need to check the port ; 
 for i in `cat mega_baidu`;do echo $i;nc -n -v -w 1 $i 19800;done
@@ -184,9 +232,88 @@ cloud： az-public01
 10.66.66.61 AZ-ListTest03 
 Account:app
 
+
+2016-01-19 
+######### Deployment Instance : to make up an evironment include kafka ，zookeeper ，kafka-agent ；tracking on 1 server ; 
+##### Kafka's confg ; 
+root@TS-V3KF01:~# cat /usr/local/kafka/config/server.properties  |grep -v "#" |sed -e /^$/d
+broker.id=1
+port=9092
+host.name=172.22.57.45
+num.network.threads=2
+ 
+num.io.threads=8
+socket.send.buffer.bytes=1048576
+socket.receive.buffer.bytes=1048576
+socket.request.max.bytes=104857600
+log.dirs=/var/log/kafka-logs
+num.partitions=2
+log.retention.hours=48
+log.segment.bytes=536870912
+log.retention.check.interval.ms=60000
+log.cleaner.enable=false
+enable.zookeeper=true
+zookeeper.connect=172.22.57.45:2333           ### 实例；zookeeper 就安在自己身上；
+zookeeper.connection.timeout.ms=1000000
+auto.create.topics.enable=false
+
+#### Zookeeper's config ; 
+:/usr/local/tracking_server/conf# cat /usr/local/zookeeper/conf/zoo.cfg  |grep -v "#"
+tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/var/lib/zookeeper/data/
+clientPort=2333
+
+### started them on /etc/init. 
+
+### Kafka's agent ;  Pay attention ; the config file kafka_agent.conf  doesn't exsit at first ; 
+ii  zamplus-kafka-agent                    1.0.10
+:/usr/local/kafka_agent/conf# cat kafka_agent.conf 
+listenPort=8083
+brokerList=10.66.66.65:9092              ### Here means the kafka server ; 
+hasLocalLog=false
+logPath=data/
+monitorConfPath=conf/monitor.conf
+monitorAddr=0.0.0.0:8084                 ### you can see 8084 is listened; 
+monitorName=globalMonitor
+kafkaClientNum=20
+#### then you can start the kafka agent ; 
+
+#### tracking 
+:/usr/local/tracking_server/conf# cat tracking.conf   ## here is some key config ;  we need to change route.conf ; 
+	ivk.route_file=../conf/route.conf
+	monitor=../conf/monitor_config.conf
+	log4cplus.appender.R.File=../log/tracking.log
+
+# The log wil tell you more message ; like why it can't boot up . 
+# tail -f ../log/tracking.log
+[2016/01/19-09:21:43.270] INFO - start daemon mode
+[2016/01/19-09:21:43.270] INFO - Initialize the logging system: /usr/local/tracking_server/conf/tracking.conf
+[2016/01/19-09:21:43.348] FAIL - perform OnInit() failed
+
+#cat route.conf   here is connect to BridgeServer , LogServer ; LogServerThrift , mapping ; 
+	
+
+
+	
+####Daily update 2016-01-19:
+sina dmp wap端cookiemapping上线  [This is all manually ,Gee ...]
+1. zampcms service is on 172.22.24.33 ; it has 2 stat command ?  
+	# ll /etc/init.d/zamplus-zampcms
+	zamplus-zampcms     zamplus-zampcms.sh  
+2 Change zamplus-cookie-mapping's confg ;Caution! don't need to bounce service ;
+	172.22.25.40 
+	172.22.25.55
+  172.22.57.79 
+  
 -------------------------Disk clean ；
 ## 可清理 今天之外的文件 ； 
 /var/log/data_update/private/data/temp/anti_fraud  
+
+# take care this command . 
+ll -t |tail -n 50 |more  ### check how many files we can delete ; 
+ll -t |tail -n 50 |awk '{print $NF}' |while read lines;do rm -r $lines;done
 
 -------------------------Disk 2  清理一些备份释放空间；
 
@@ -203,6 +330,10 @@ root@TS-OP02:/var/sdj/172.22.24.33/redis_backup# du -sh * |head -n 30 |awk '{pri
  
 /dev/sdc       1007G  864G   93G  91% /opt/amos   # du -sh /opt/amos/data/kafka-logs
 747G	/opt/amos/data/kafka-logs  
+###########################Disk 4  吴军博士 的目录，牛逼呀，还得我们擦丫的ass；
+Low free disk space on SHXJ-H07-SDB01_172.22.9.1 volume / - 8.65 % Left
+root@SHXJ-H07-SDB01:/home/john/workspace/rmms/data# find /home/john/workspace/rmms/data -mtime +7 |while read lines;do rm -r $lines;done
+
 
 -----------------------------------
 
@@ -252,7 +383,7 @@ fab -f init_azure.py  init_salt
 under root
 172.22.56.7
 supervisorctl stop merchant_task merchant_task_monitor merchant_task_schd
-ps -ef | grep merchant_task ## almost not stop ， using the following ways；
+ps -ef | grep merchant_task           ## almost not stop ， using the following ways；
 ps -ef |grep merchant_task |grep -v grep |awk '{print $2}' |xargs kill -9 
 ps -ef |grep merchant_task
 
@@ -260,10 +391,10 @@ ps -ef |grep merchant_task
 supervisorctl stop merchant_task
 ps -ef | grep merchant_task 
 
-2.
-172.22.56.7
-redis-cli
-flushall
+2.   这TM是干嘛啊？ 
+172.22.56.7 
+redis-cli 
+flushall 
 
 3.start
 172.22.56.7
@@ -316,5 +447,7 @@ fab -f init_azure.py  init_salt
 
 困难：
 	查询模块吧，有可能 知道如何工作 却自己写不出来；    
-	
+
+
+----
 

@@ -27,7 +27,7 @@ http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=13764728
 221.228.208.59/172.22.57.78
 Add proxy in here ;/etc/nginx/sites-enabled
 
-## 大平台；
+## 大平台；Disk Usage ;
 221.228.208.16
 Disk usage problem： Bony and JiangBing take charge of these hadoop servers . you need to take care others ; 
 172.22.5.x    hadoop  
@@ -44,6 +44,52 @@ support.it@zamplus.com
 NeonCluster：
 http://wiki.dev.zamplus.com/pages/viewpage.action?pageId=107809983
 -------------My Working area (Azure); I will take charge this .
+
+----------------------------Testing Server update. 
+10.66.66.66 azure-vince-n01		 60057
+
+10.66.66.63 AZ-RtmTest01       60054 
+10.66.66.64 AZ-RtmTest02			 60055
+10.66.66.65 AZ-KafkaTest01		 60056
+
+####################################  爬虫环境 软件公司；
+Standard Environment：
+10.66.66.68 az-crawler01     AZ-SERV068                         redis-server  mysql-server 
+10.66.66.31 az-crawler02     6024-5824-6511-8781-5696-2757-08
+
+Deployment Environment：
+10.66.66.11 AZ-CrawlerID01   AZ-CrawlerID01                     redis-server 
+10.66.66.12 AZ-CrawlerID02   AZ-CrawlerID02                     (mysql)    PD you know ; ok  crawler
+10.66.66.13 AZ-CrawlerID03   AZ-CrawlerID03                     (redis-server) 
+10.66.66.14 AZ-CrawlerID04   AZ-CrawlerID04
+####################################  IP 变更个日的；；
+zampbeat1  10.66.66.67
+zampbeat2  10.66.66.69
+zampbeat3  10.66.66.70
+zampbeat4  10.66.66.71
+zampbeat5  10.66.66.72
+
+
+
+
+{
+### Edit azure.info , replace with following ones.
+10.66.66.29  AZ-DNS01
+10.66.66.33  AZ-DNS02
+
+### The script init_azure.py include following message. some time need to replace .
+User:azureuser
+Pwd:AdaG(sVa4A3
+
+### Run it as sudo ? yeah ,I think . 
+cd /root/scripts/fab/
+fab -f init_azure.py  init_salt
+}
+
+# sed -i s/4352-5804-0589-0512-8144-6373-40/azure-vince01/g /etc/salt/minion_id
+# sed -i s/4352-5804-0589-0512-8144-6373-40/azure-vince01/g /etc/salt/minion
+----------------------------
+
 	CenOS :
 NameNode
 10.66.66.24 - NN-p;JN;ZK; Hbase-backup   
@@ -177,6 +223,7 @@ $ yum install salt-minion
 
 -------------
 ----------------------------------------------
+确定 英语面试 的 资料，问题； --  今天要背熟练了，周四自由发挥，周五就没时间了，直接上阵；
 
 脚本初始化 
 CentOS 
@@ -185,7 +232,7 @@ CentOS
 	service start/auto start for salt & zabbix       -ok
 	zabbix's new config file's copy.                 -ok
 	tar the package                                  -ok
-	test the usages                                  -doing ； --- test result ；
+	test the usages                                  -doing；-- missing packe ;well -- no need -- ok ; I learned how to download images;
 	
 	login OP03 ; salt-key -a the right key ;  add my account;    
 	mointor ; 
@@ -201,12 +248,59 @@ zabbix:
 	How to add server automaticlly .  in one subnet ? 
 	
 ---------Important things: 
-Make sure all the CentOS server has been runned the init scripts ;
+Make sure all the CentOS server has been runned the init scripts ; w -- 
 nginx+ keepalive ;
 ansible ; tar it to clould ;
 Chuck's script  test if it can be used for the update ! 
+——————————————————
+
+---------
+make sure the chuck's script can use ; 
+... well , we can't use it for other hosts ; 
+... my methord is to 
+
+---------key 1 ;
+Make the script can be used for all 
+
+Current IP list:['10.66.66.15']
+>>c
+name 'sn_dict' is not defined
+SERVER SELECTION:
+[a] all
+[c] input the cmd
+[q] break
+
+#### 这样就没问题了！ 
+
+Current IP list:[]
+>>172.22.56.21
+SERVER SELECTION:
+[a] all
+[c] input the cmd
+[q] break
+
+Current IP list:['172.22.56.21']
+
+--------for further ，you can check salt ； 
+
+紧急的事:
 
 
-zambeat9
+vsftp mysql ;
+mycat 扩展 mysql；
 
-A6 
+
+
+重要的事
+	# 微软云 ；添加server 这个 --- 一般累；
+	# 初始化 统一；-- 挂盘最好统一；--都用一个目录吧；--挂一级目录 /sdc
+	# 需求：
+		安装特定软件环境；基本该记录的文档，都记录了吧； 
+ 		zlogin 添加 账户； 一个个点；也不是问题； 得查 用户的实际 名字，去salt里找； 
+ 		
+
+---------Make sure the zabbix auto added plan can be done . --- 这个需不需要 监控呢？ 
+
+##### 那我的实验架构 怎么办呢？ 
+
+http://jira.dev.zamplus.com/browse/OPTSERVICE-4502  MySQL数据库水平扩展测试  这个是让我开三台mysql服务器吗？能不能用我们的docker 给他们开？

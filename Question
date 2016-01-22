@@ -165,3 +165,19 @@ zamplus_report …œœﬂ OPTSERVICE-4555
 	OPTSERVICE-4598 ;
 	OPTSERVICE-4627 .
 12.zampda3.0 01.15 hotfix update per OPTSERVICE-4645.
+
+------------------
+
+1.Tried to build vsftpd using mysql°Æs pam per OPTSERVICE-4658 OPTSERVICE-4660
+2.Who-server updated per OPTSERVICE-4734;
+3.Megatron update per 
+	OPTSERVICE-4723;
+	OPTSERVICE-4735;
+4.Added jianfa's zlogin permission per OPTSERVICE-4719 
+5.Megatron updated per OPTSERVICE-4723 
+6.Seted up zlogin account for dmp group per ZAMPDMP-2781 
+7.Seted up crawler develop enviroment per ZAMPDMP-2784 
+8.Cookiemapping update per OPTSERVICE-4659 
+9.Server poi http updateed per OPTSERVICE-4655 
+10.Build 3 azure server for rtm testing per OPTSERVICE-4652 
+ 
